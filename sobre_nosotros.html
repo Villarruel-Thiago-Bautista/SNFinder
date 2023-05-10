@@ -6,45 +6,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/sobre_nosotros.css" />
+    <script
+      src="https://kit.fontawesome.com/1305786c57.js"
+      crossorigin="anonymous"
+    ></script>
     <title>SNFinder</title>
   </head>
   <body>
+    <!--Header-->
     <header>
-      <nav class="nav">
-        <div class="name">SN FINDER</div>
-        <ul class="menu">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="buscar_invocador.html">Search summoner</a></li>
-          <li><a href="roles.html">Roles</a></li>
-          <li><a href="sobre_nosotros.html">About us</a></li>
-        </ul>
-      </nav>
+      <div class="container">
+        <a href="index.html" class="logo">SNFINDER</a>
+        <nav>
+          <div class="menu-icon">
+            <i class="fa-solid fa-bars"></i>
+          </div>
+          <ul class="menu">
+            <li><a href="index.html">INICIO</a></li>
+            <li><a href="buscar_invocador.html">BUSCAR INVOCADOR</a></li>
+            <li><a href="buscar_invocador_tft.html">TFT</a></li>
+            <li><a href="sobre_nosotros.html">SOBRE NOSOTROS</a></li>
+          </ul>
+        </nav>
+      </div>
     </header>
+
+    <!--Main-->
     <main>
-      <section class="container">
-        <article class="container-thiago">
+      <!--Section one-->
+      <section id="hero">
+        <h1>
+          Busca estadisticas de jugadores <br />
+          de toda la región
+        </h1>
+        <form action="#about-snfinder">
+          <button>QUIERO SABER MAS</button>
+        </form>
+      </section>
+
+      <!--Section two-->
+      <section class="container-about-us">
+        <div class="container-thiago">
           <h3>Villarruel Thiago Butista</h3>
           <p>
-            Responsible for the structure (HTML) and style (CSS) of the web. As
-            well as adding a simple dynamism to it.
+            Responsable de la estructura (HTML) y estilo (CSS) de la pagina web,
+            así como del diseño responsive. En un futuro encargado de la
+            conexión a la API para obtener datos de TFT y la conexion a una db.
           </p>
-        </article>
-        <article class="container-julian">
+        </div>
+        <div class="container-julian">
           <h3>Gonzalez Lopez Julian</h3>
           <p>
-            Responsible for the connection with the Riot Games API and the
-            dynamism of the buscar_invocador.html page.
+            Responsable de la conexión a la API de Riot Games y del dinamismo de
+            la pagina buscar_invocador.html. En un futuro responsable del back
+            de la web con Python.
           </p>
-        </article>
-        <article class="container-benjamin">
-          <h3>Peyraga Benjamin</h3>
-          <p>...</p>
-        </article>
+        </div>
       </section>
     </main>
+
     <footer>
-      Copyright 2023<br />
-      This isn't an official Riot Games product
+      <div class="container">
+        <p>
+          &copy; SNFinder 2023 <br />
+          Página creada por
+          <a href="https://github.com/Villarruel-Thiago-Bautista"
+            >Villarruel Thiago Bautista
+            <img
+              class="logo-github"
+              src="img/logo-github.png"
+              alt="Logo github"
+          /></a>
+        </p>
+      </div>
     </footer>
+    <script src="js/menu-responsive.js"></script>
   </body>
 </html>

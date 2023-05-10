@@ -6,31 +6,54 @@ const summoner_data = summoner_display.getElementsByTagName("ul")[0];
 const summoner_image = summoner_display.getElementsByTagName("img")[0];
 const summoner_display_history = document.getElementById("summoner_display_history");
 const body_sdh = summoner_display_history.getElementsByTagName("table")[0].getElementsByTagName("tbody")[0];
+const search_btn = document.getElementById("search-btn");
+
 
 //tabla de conversion de info de respuesta
 const hashTable = {"RANKED_FLEX_SR":"Flex", "RANKED_SOLO_5x5":"Solo/Duo"};
 
-const API_KEY = "RGAPI-a9d4f497-0788-4e26-bf48-d57030f70d7d";
+const API_KEY = "RGAPI-ebbbca46-da57-4b11-9524-86e36c1eb3a8";
 
 changeDisplay(summoner_display_history,"hidden");
 
-//Disparador busqueda
-summoner_input.addEventListener("keydown", (event) => {
-  if (event.isComposing || event.key === "Enter") {
+
+
+//Disparador busqueda via enter
+
+if(window.navigator.userAgent.match(/android|iphone|kindle|ipad/i)){
+  
+}
+else{ 
+  summoner_input.addEventListener("keydown", (event) => {
+    if (event.isComposing || event.key === "Enter") {
+      if (summoner_input.value != "") {
+          summoner_input.disabled = true;
+          search_btn.disabled = true;
+          rellenarInfoSummoner();
+          rellenarInfoPartidas();
+      }
+  
+    }
+  });  
+}
+
+//Disparador busqueda via boton
+search_btn.addEventListener("click", (event) => {
+  console.log("asd");
     if (summoner_input.value != "") {
+        summoner_input.disabled = true;
+        search_btn.disabled = true;
         rellenarInfoSummoner();
         rellenarInfoPartidas();
     }
-
-  }
 });
-
 
 //rellena informacion sobre el invocador en el div con id summoner_display
 async function rellenarInfoSummoner(){
     let basicData = await basicInfoSummoner()
     let rankData = await summonerRank(basicData)
-    summoner_image.src = `https://ddragon.leagueoflegends.com/cdn/11.6.1/img/profileicon/${basicData.profileIconId}.png`;
+    await summonerImage(`https://ddragon.leagueoflegends.com/cdn/11.6.1/img/profileicon/${basicData.profileIconId}.png`);
+    summoner_image.style.visibility = "initial"
     summoner_data.children[0].textContent = summoner_input.value;
     summoner_data.children[1].textContent = `Level: ${basicData.summonerLevel}`;
     let aux = 2;
@@ -50,6 +73,9 @@ async function rellenarInfoSummoner(){
 
 //a futuro rellena informacion sobre las partidas dinamicamente en un table 
 async function rellenarInfoPartidas(){
+
+  let tbody = summoner_display_history.getElementsByTagName("table")[0].getElementsByTagName("tbody")[0];
+
   //Preparaciones iniciales al HTML
   borrarHistorial();
   borrarInfoSummoner();
@@ -62,10 +88,12 @@ async function rellenarInfoPartidas(){
     let match_data = await matchInfo(matchIdList[i]);
     let player_match_data = await player_matchData(match_data,basicData.puuid);
     let outcome = player_match_data.win ? "Victory" : "Defeat";
-    summoner_display_history.getElementsByTagName("table")[0].getElementsByTagName("tbody")[0].appendChild(crearRegistro([player_match_data.championName,player_match_data.kills,player_match_data.deaths,player_match_data.assists,outcome]))
+    tbody.appendChild(crearRegistro([player_match_data.championName,player_match_data.kills,player_match_data.deaths,player_match_data.assists,outcome]))
   } 
   //Vuelve a estar visible el historial, ya completo
   changeDisplay(summoner_display_history,"visible");
+  search_btn.disabled = false;
+  summoner_input.disabled = false;
 }
 
 //Funcion para pedir toda la info buscando el estandar DRY uwu
@@ -89,7 +117,10 @@ async function basicInfoSummoner() {
     return res;
   }
   else{
+    alert("No existe este invocador");
     console.log("404");
+    search_btn.disabled = false;
+    summoner_input.disabled = false;
   }
 }
 //retorna el rango del invocador (nada, soloq, flex, soloq y flex)
@@ -106,6 +137,19 @@ async function matchIds(puuid){
 async function matchInfo(match_id){
   let res = await genericRequest(`https://americas.api.riotgames.com/lol/match/v5/matches/${match_id}?api_key=${API_KEY}`);
   return res;
+}
+
+async function summonerImage(url){
+  summoner_image.src = "imagenes/amarillo.png"; 
+  try{
+    let res = await fetch(url);
+    if(res.status == 200){
+      summoner_image.src = url; 
+    }  
+  }
+  catch(e){
+    return null;
+  }
 }
 
 
@@ -144,6 +188,7 @@ function borrarInfoSummoner(){
   summoner_data.children[2].textContent = ""; 
   summoner_data.children[3].textContent = "";
   summoner_data.children[4].textContent = "";
+  summoner_display_history.getElementsByTagName("table")[0].getElementsByTagName("tbody")[0].innerHTML = "";
 }
 
 function changeDisplay(elemento,visibilidad){
