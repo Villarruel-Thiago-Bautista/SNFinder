@@ -136,6 +136,7 @@ header {
   left: 50%;
   transform: translate(-50%, -50%);
   margin-top: 50em;
+  margin-top: 47em;
 }
 
 .about-container {
@@ -191,7 +192,7 @@ header {
   text-align: center;
 }
 
-#differences h3 {
+#differences h2 {
   margin-bottom: 1em;
   text-align: center;
   color: #f93f55;
@@ -271,29 +272,26 @@ footer a {
 
   /* About */
 
+  div.about-container {
+    padding: 1em;
+  }
+
   .about-img {
     visibility: visible;
   }
 
   .about-container {
-    margin-top: 20em;
-    margin-bottom: 15em;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1fr;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     place-items: center;
+    height: 100vh;
   }
 
   #about-snfinder button {
-    display: block;
-    margin: 0 auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    margin-top: 70em;
+    display: none;
   }
 
   .img-container {
@@ -317,6 +315,9 @@ footer a {
 
   #our-offer h2 {
     margin-bottom: 1em;
+    background-color: #f93f55;
+    color: black;
+    padding: 1em;
   }
 
   .offer-container {
@@ -355,6 +356,12 @@ footer a {
   #differences {
     margin-top: 10em;
     text-align: center;
+  }
+
+  #differences h2 {
+    background-color: #f93f55;
+    padding: 1em;
+    color: black;
   }
 
   /* Footer */

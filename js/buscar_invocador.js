@@ -12,7 +12,7 @@ const search_btn = document.getElementById("search-btn");
 //tabla de conversion de info de respuesta
 const hashTable = {"RANKED_FLEX_SR":"Flex", "RANKED_SOLO_5x5":"Solo/Duo"};
 
-const API_KEY = "RGAPI-ebbbca46-da57-4b11-9524-86e36c1eb3a8";
+const API_KEY = "RGAPI-1b233a7f-286d-40ed-a374-e189f3a14c3b";
 
 changeDisplay(summoner_display_history,"hidden");
 
@@ -140,7 +140,7 @@ async function matchInfo(match_id){
 }
 
 async function summonerImage(url){
-  summoner_image.src = "imagenes/amarillo.png"; 
+  summoner_image.src = "img/amarillo.png"; 
   try{
     let res = await fetch(url);
     if(res.status == 200){
