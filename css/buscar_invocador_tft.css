@@ -9,6 +9,9 @@
 html {
   scroll-behavior: smooth;
 }
+html::-webkit-scrollbar {
+  display: none;
+}
 
 body {
   font-family: friz-quadrata-regular;
