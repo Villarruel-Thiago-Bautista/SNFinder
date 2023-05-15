@@ -3,7 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="HandheldFriendly" content="true" />
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/buscar_invocador.css" />
     <link
@@ -53,7 +57,12 @@
         <h1>Dime tu nombre, Invocador</h1>
         <div>
           <input type="text" id="summoner_input" tabindex="1" />
-          <input type="submit" id="search-btn" tabindex="2" />
+          <input
+            type="submit"
+            id="search-btn"
+            tabindex="2"
+            value="Buscar jugador"
+          />
         </div>
       </section>
       <div id="summoner_display_main">

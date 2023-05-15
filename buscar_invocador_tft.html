@@ -3,7 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="HandheldFriendly" content="true" />
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/buscar_invocador_tft.css" />
     <link
@@ -44,12 +48,41 @@
           Busca estadisticas de jugadores <br />
           de TFT de toda la región
         </h1>
-        <form action="#about-snfinder">
+        <form action="#tabla-resultados">
           <button>COMENZAR</button>
         </form>
       </section>
 
-      <h1>EN PROCESO</h1>
+      <section id="summoner_input_holder">
+        <h1>Dime tu nombre, Invocador</h1>
+        <form id="search-form">
+          <input type="text" id="summonerName" name="summonerName" />
+          <button type="submit" onclick="getSummonerInfo()" id="search_btn">
+            Buscar jugador
+          </button>
+        </form>
+      </section>
+      <section id="info-summoner-section">
+        <div id="icono-invocador">
+          <img id="icono-img" src="" alt="Icono de invocador" />
+        </div>
+        <div id="info-summoner"></div>
+      </section>
+      <section>
+        <div class="resultado-tabla">
+          <table id="tabla-resultados">
+            <thead>
+              <tr>
+                <th>Posición</th>
+                <th>Resultado</th>
+                <th>Jugadores eliminados</th>
+                <th>Rondas jugadas</th>
+              </tr>
+            </thead>
+            <tbody id="resultado-body"></tbody>
+          </table>
+        </div>
+      </section>
     </main>
     <footer>
       <div class="container">
@@ -67,5 +100,6 @@
       </div>
     </footer>
     <script src="js/menu-responsive.js"></script>
+    <script src="js/buscar_invocador_tft.js"></script>
   </body>
 </html>
