@@ -14,7 +14,7 @@ const search_btn = document.getElementById("search-btn");
 
 //tabla de conversion de info de respuesta
 
-const API_KEY = "RGAPI-1b233a7f-286d-40ed-a374-e189f3a14c3b";
+const API_KEY = "RGAPI-5cced285-500e-45fd-9e3d-577810f27713";
 
 changeDisplay(summoner_display_history, "hidden");
 
