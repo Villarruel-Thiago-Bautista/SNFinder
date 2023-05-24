@@ -68,6 +68,18 @@ button:hover {
     cursor: pointer;
     margin-bottom: 10px;
     margin-top: 10px;
+    text-align: right;
+    margin-top: -1em;
+  }
+
+  .logo {
+    display: flex;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #f93f55;
+    text-decoration: none;
+    font-size: 1.5em;
+    margin-top: 1em;
   }
 
   .menu {
@@ -461,4 +473,15 @@ button:hover {
     height: auto;
     margin: 0 auto;
   }
+}
+
+#texto-blitz,
+#blitz {
+  display: none;
+  margin: auto;
+}
+
+#blitz {
+  margin-top: 1rem;
+  border-radius: 100%;
 }

@@ -11,6 +11,7 @@ console.log(summonerName);
 
 searchForm.addEventListener("submit", function (event) {
   event.preventDefault(); // QUE LA PAGINA NO SE RECARGUE AL ENVIAR EL FORMULARIO
+  ocultarNotFound();
   getSummonerInfo();
 });
 
@@ -39,7 +40,7 @@ function getSummonerInfo() {
     .then((data) => {
       if (data.status && data.status.status_code === 404) {
         // MOSTRAR MENSAJE EN CASO DE QUE EL JUGADOR NO EXISTA
-        showNotFoundMessage();
+        mostrarNotFound();
       } else {
         const summonerId = data.id;
         const puuid = data.puuid;
@@ -62,7 +63,7 @@ function getSummonerInfo() {
     })
     .catch((error) => {
       console.error(error);
-      showNotFoundMessage();
+      mostrarNotFound();
     })
     .finally(() => {
       search_btn.disabled = false;
@@ -171,28 +172,24 @@ function showSummonerMatchData(placement, players_eliminated, last_round) {
 // Obtener el elemento input
 const summonerInput = document.getElementById("summoner-input");
 
-// Agregar el event listener al input
-summonerInput.addEventListener("keyup", function (event) {
-  // Verificar si la tecla presionada fue "Enter"
-  if (event.keyCode === 13) {
-    // Llamar a la función que limpia la tabla
-    clearTable();
-  }
-});
+//FUNCION QUE OCULTA EL NOTFOUND
 
-//FUNCION QUE CREA UN PARRAFO Y UNA IMAGEN, LOS INSERTA Y LOS MUESTRA
-
-function showNotFoundMessage() {
-  const mensaje = document.createElement("p");
+function ocultarNotFound() {
+  const mensaje = document.getElementById("texto-blitz");
   mensaje.textContent = "No se encontró la información.";
+  const imagen = document.getElementById("blitz");
+  mensaje.style.display = "none";
+  imagen.style.display = "none";
+}
 
-  const imagen = document.createElement("img");
-  imagen.src = "/img/summonerNotFound.png";
-  imagen.alt = "Summoner no encontrado";
+//FUNCION QUE MUESTRA EL NOTFOUND
 
-  const infoSummonerSection = document.getElementById("info-summoner-section");
-  infoSummonerSection.appendChild(mensaje);
-  infoSummonerSection.appendChild(imagen);
+function mostrarNotFound() {
+  const mensaje = document.getElementById("texto-blitz");
+  mensaje.textContent = "No se encontró la información.";
+  const imagen = document.getElementById("blitz");
+  mensaje.style.display = "block";
+  imagen.style.display = "block";
 }
 
 // Función que limpia la tabla

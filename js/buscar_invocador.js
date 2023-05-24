@@ -13,6 +13,7 @@ const body_sdh = summoner_display_history
 const search_btn = document.getElementById("search-btn");
 
 //tabla de conversion de info de respuesta
+const hashTable = { RANKED_FLEX_SR: "Flex", RANKED_SOLO_5x5: "Solo/Duo" };
 
 const API_KEY = "RGAPI-075b4862-26ee-4a73-9f41-5e09ac6c5b9d";
 
@@ -49,6 +50,7 @@ search_btn.addEventListener("click", (event) => {
 
 //rellena informacion sobre el invocador en el div con id summoner_display
 async function rellenarInfoSummoner() {
+  ocultarNotFound();
   let basicData = await basicInfoSummoner();
   let rankData = await summonerRank(basicData);
   await summonerImage(
@@ -145,7 +147,7 @@ async function basicInfoSummoner() {
   if (res != null) {
     return res;
   } else {
-    alert("No existe este invocador");
+    mostrarNotFound();
     console.log("404");
     search_btn.disabled = false;
     summoner_input.disabled = false;
@@ -228,4 +230,22 @@ function borrarInfoSummoner() {
 
 function changeDisplay(elemento, visibilidad) {
   elemento.style.visibility = visibilidad;
+}
+
+function ocultarNotFound() {
+  const mensaje = document.getElementById("texto-blitz");
+  mensaje.textContent = "No se encontró la información.";
+  const imagen = document.getElementById("blitz");
+  mensaje.style.display = "none";
+  imagen.style.display = "none";
+  imagen.style.visibility = "hidden";
+}
+
+function mostrarNotFound() {
+  const mensaje = document.getElementById("texto-blitz");
+  mensaje.textContent = "No se encontró la información.";
+  const imagen = document.getElementById("blitz");
+  mensaje.style.display = "block";
+  imagen.style.display = "block";
+  imagen.style.visibility = "visible";
 }
