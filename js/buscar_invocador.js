@@ -13,6 +13,7 @@ const body_sdh = summoner_display_history
 const search_btn = document.getElementById("search-btn");
 
 //tabla de conversion de info de respuesta
+const hashTable = {"RANKED_FLEX_SR":"Flex", "RANKED_SOLO_5x5":"Solo/Duo"};
 
 const API_KEY = "RGAPI-075b4862-26ee-4a73-9f41-5e09ac6c5b9d";
 
