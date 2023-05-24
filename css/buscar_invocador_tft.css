@@ -125,6 +125,10 @@ button:hover {
 
   /* Cuerpo */
 
+  .oculto {
+    display: none;
+  }
+
   #info-summoner-section {
     text-align: center;
     margin-bottom: 1em;
@@ -314,6 +318,10 @@ button:hover {
 
   /*Cuerpo*/
 
+  .oculto {
+    display: none;
+  }
+
   #info-summoner-section {
     text-align: center;
     margin-bottom: 1em;
@@ -370,7 +378,7 @@ button:hover {
 
   #info-summoner {
     grid-area: 1 / 1 / 2 / 2;
-    background-color: #f5f5f5;
+
     padding: 1.25em;
     border-radius: 0.3125em;
     display: inline-block;
@@ -389,7 +397,6 @@ button:hover {
 
   .resultado-tabla {
     grid-area: 1 / 2 / 2 / 3;
-    background-color: #f5f5f5;
     padding: 0.625em;
     border-radius: 0.3125em;
     max-width: 37.5em;

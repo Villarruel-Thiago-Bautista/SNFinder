@@ -48,7 +48,7 @@
           Busca estadisticas de jugadores <br />
           de TFT de toda la región
         </h1>
-        <form action="#tabla-resultados">
+        <form action="#tabla">
           <button>COMENZAR</button>
         </form>
       </section>
@@ -57,20 +57,18 @@
         <h1>Dime tu nombre, Invocador</h1>
         <form id="search-form">
           <input type="text" id="summonerName" name="summonerName" />
-          <button type="submit" onclick="getSummonerInfo()" id="search_btn">
-            Buscar jugador
-          </button>
+          <button type="submit" id="search_btn">Buscar jugador</button>
         </form>
       </section>
       <section id="info-summoner-section">
-        <div id="icono-invocador">
+        <div id="icono-invocador" class="oculto">
           <img id="icono-img" src="" alt="Icono de invocador" />
         </div>
         <div id="info-summoner"></div>
       </section>
       <section>
-        <div class="resultado-tabla">
-          <table id="tabla-resultados">
+        <div class="resultado-tabla" id="tabla">
+          <table id="tabla-resultados" class="oculto">
             <thead>
               <tr>
                 <th>Posición</th>

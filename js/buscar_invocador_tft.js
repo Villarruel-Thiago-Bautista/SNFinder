@@ -1,40 +1,73 @@
 /* INFO DE LA API */
-const API_KEY = "RGAPI-5cced285-500e-45fd-9e3d-577810f27713";
+const API_KEY = "RGAPI-075b4862-26ee-4a73-9f41-5e09ac6c5b9d";
 const BASE_URL = "https://la2.api.riotgames.com";
 const BASE_URL_MATCH = "https://americas.api.riotgames.com";
 
-/*CONSTANTE PARA ACCEDER AL CONTENIDO DEL INPUT */
-const summonerName = document.getElementById("summonerName");
-
 /* CONSTANTES VARIAS */
 const searchForm = document.getElementById("search-form");
+const summonerName = searchForm.getElementsByTagName("input")[0];
+const search_btn = searchForm.getElementsByTagName("button")[0];
+console.log(summonerName);
 
 searchForm.addEventListener("submit", function (event) {
-  event.preventDefault(); // Prevenir que la página se recargue al enviar el formulario
+  event.preventDefault(); // QUE LA PAGINA NO SE RECARGUE AL ENVIAR EL FORMULARIO
   getSummonerInfo();
 });
 
-//FUNCION QUE OBTIENE INFORMACION BASICA DEL JUGADOR (NOMBRE, NIVEL, SUMMONERID)
+// FUNCION QUE OBTIENE INFORMACION BASICA DEL JUGADOR (NOMBRE, NIVEL, SUMMONERID)
 function getSummonerInfo() {
-  event.preventDefault();
+  search_btn.disabled = true;
+  summonerName.disabled = true;
+
+  // Ocultar la imagen del "Icono de invocador"
+  document.getElementById("icono-invocador").classList.add("oculto");
+
+  // Ocultar el nombre y el nivel del invocador
+  document.getElementById("info-summoner").innerHTML = "";
+
   // Limpia la tabla antes de mostrar los nuevos resultados
   const resultadoBody = document.getElementById("resultado-body");
   resultadoBody.innerHTML = "";
+
+  // Oculta la tabla
+  const tablaResultados = document.getElementById("tabla-resultados");
+  tablaResultados.classList.add("oculto");
+
   const url = `${BASE_URL}/tft/summoner/v1/summoners/by-name/${summonerName.value}?api_key=${API_KEY}`;
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
-      const summonerId = data.id;
-      const puuid = data.puuid;
-      //CONSTANTE QUE GUARDA EL VALOR OBTENIDO DE LA FUNCION getSummonerIcon PARA MOSTRAR EL ICONO DEL JUGADOR
-      const imageUrl = getSummonerIcon(
-        `https://ddragon.leagueoflegends.com/cdn/11.6.1/img/profileicon/${data.profileIconId}.png`
-      );
-      document.getElementById("icono-img").src = imageUrl;
-      getSummonerRank(data, summonerId);
-      getSummonerMatchs(puuid);
+      if (data.status && data.status.status_code === 404) {
+        // MOSTRAR MENSAJE EN CASO DE QUE EL JUGADOR NO EXISTA
+        showNotFoundMessage();
+      } else {
+        const summonerId = data.id;
+        const puuid = data.puuid;
+        const imageUrl = getSummonerIcon(
+          `https://ddragon.leagueoflegends.com/cdn/11.6.1/img/profileicon/${data.profileIconId}.png`
+        );
+        document.getElementById("icono-img").src = imageUrl;
+
+        // MOSTRAR EL ICONO UNA VEZ QUE SE HAYAN CARGADO LOS DATOS
+        const iconoInvocador = document.getElementById("icono-invocador");
+        iconoInvocador.classList.remove("oculto");
+
+        getSummonerRank(data, summonerId);
+        getSummonerMatchs(puuid);
+
+        // MOSTRAR LA TABLA UNA VEZ QUE SE HAYAN CARGADO LOS DATOS
+        const tablaResultados = document.getElementById("tabla-resultados");
+        tablaResultados.classList.remove("oculto");
+      }
     })
-    .catch((error) => console.error(error));
+    .catch((error) => {
+      console.error(error);
+      showNotFoundMessage();
+    })
+    .finally(() => {
+      search_btn.disabled = false;
+      summonerName.disabled = false;
+    });
 }
 
 function getSummonerIcon(iconUrl) {
@@ -54,7 +87,9 @@ function getSummonerRank(data, summonerId) {
           : { tier: "Sin rango", rank: "" };
       showSummonerData(data, rank);
     })
-    .catch((error) => console.error(error));
+    .catch((error) => {
+      console.error(error);
+    });
 }
 
 //FUNCION QUE RECIBE EL PUUID OBTENIDO MEDIANTE LA FUNCION getSummonerInfo Y MEDIANTE ESTE OBTIENE LOS MATCHID
@@ -64,11 +99,17 @@ function getSummonerMatchs(puuid) {
   )
     .then((response) => response.json())
     .then((data) => {
-      //BUCLE FOR QUE RECORRE EL ARRAY CON LOS MATCHSID (MAXIMO 20)
-      for (i = 0; i < 5; i++) {
-        let matchId = data[i];
-        getSummonerMatchsInfo(matchId, puuid);
+      if (data.length > 0) {
+        //BUCLE FOR QUE RECORRE EL ARRAY CON LOS MATCHSID (MAXIMO 20)
+        for (i = 0; i < 5; i++) {
+          let matchId = data[i];
+          getSummonerMatchsInfo(matchId, puuid);
+        }
       }
+    })
+    .finally(() => {
+      summonerName.disabled = false;
+      search_btn.disabled = false;
     });
 }
 
@@ -138,6 +179,21 @@ summonerInput.addEventListener("keyup", function (event) {
     clearTable();
   }
 });
+
+//FUNCION QUE CREA UN PARRAFO Y UNA IMAGEN, LOS INSERTA Y LOS MUESTRA
+
+function showNotFoundMessage() {
+  const mensaje = document.createElement("p");
+  mensaje.textContent = "No se encontró la información.";
+
+  const imagen = document.createElement("img");
+  imagen.src = "/img/summonerNotFound.png";
+  imagen.alt = "Summoner no encontrado";
+
+  const infoSummonerSection = document.getElementById("info-summoner-section");
+  infoSummonerSection.appendChild(mensaje);
+  infoSummonerSection.appendChild(imagen);
+}
 
 // Función que limpia la tabla
 function clearTable() {

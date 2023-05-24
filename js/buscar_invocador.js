@@ -14,7 +14,7 @@ const search_btn = document.getElementById("search-btn");
 
 //tabla de conversion de info de respuesta
 
-const API_KEY = "RGAPI-5cced285-500e-45fd-9e3d-577810f27713";
+const API_KEY = "RGAPI-075b4862-26ee-4a73-9f41-5e09ac6c5b9d";
 
 changeDisplay(summoner_display_history, "hidden");
 
@@ -97,23 +97,29 @@ async function rellenarInfoPartidas() {
   //Pedidos de informacion
   let basicData = await basicInfoSummoner();
   let matchIdList = await matchIds(basicData.puuid);
+  console.log(matchIdList);
   //For encargado de hacer el pedido de informacion y pintado de informacion dependiendo de i
-  for (let i = 0; i < 5; i++) {
-    let match_data = await matchInfo(matchIdList[i]);
-    let player_match_data = await player_matchData(match_data, basicData.puuid);
-    let outcome = player_match_data.win ? "Victory" : "Defeat";
-    tbody.appendChild(
-      crearRegistro([
-        player_match_data.championName,
-        player_match_data.kills,
-        player_match_data.deaths,
-        player_match_data.assists,
-        outcome,
-      ])
-    );
+  if (matchIdList.length > 0) {
+    for (let i = 0; i < 5; i++) {
+      let match_data = await matchInfo(matchIdList[i]);
+      let player_match_data = await player_matchData(
+        match_data,
+        basicData.puuid
+      );
+      let outcome = player_match_data.win ? "Victory" : "Defeat";
+      tbody.appendChild(
+        crearRegistro([
+          player_match_data.championName,
+          player_match_data.kills,
+          player_match_data.deaths,
+          player_match_data.assists,
+          outcome,
+        ])
+      );
+    }
+    //Vuelve a estar visible el historial, ya completo
+    changeDisplay(summoner_display_history, "visible");
   }
-  //Vuelve a estar visible el historial, ya completo
-  changeDisplay(summoner_display_history, "visible");
   search_btn.disabled = false;
   summoner_input.disabled = false;
 }
