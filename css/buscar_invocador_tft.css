@@ -467,13 +467,35 @@ button:hover {
   }
 }
 
-#texto-blitz,
-#blitz {
-  display: none;
-  margin: auto;
+/*ESTILOS MODAL*/
+
+@keyframes showModal {
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
 }
 
-#blitz {
-  margin-top: 1rem;
+.animado{
+  animation: showModal 1s forwards ease;
+}
+
+#modal{
+  margin: auto;
+  padding: 2rem;
+  border-radius: 10%;
+  border: none;
+  text-align: center;
+  box-shadow: 10px 10px 53px 11px rgba(0,0,0,0.75);
+}
+
+#modal p{
+  margin-bottom: .5rem;
+  font-weight: 1000;
+}
+
+#modal img{
   border-radius: 100%;
 }

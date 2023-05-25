@@ -4,12 +4,11 @@ const region_input = document.getElementById("region_input");
 const summoner_display = document.getElementById("summoner_display");
 const summoner_data = summoner_display.getElementsByTagName("ul")[0];
 const summoner_image = summoner_display.getElementsByTagName("img")[0];
-const summoner_display_history = document.getElementById(
-  "summoner_display_history"
-);
-const body_sdh = summoner_display_history
-  .getElementsByTagName("table")[0]
-  .getElementsByTagName("tbody")[0];
+const summoner_display_history = document.getElementById("summoner_display_history");
+const modal = document.getElementById("modal");
+const btn_modal = document.getElementById("btn-modal");
+
+const body_sdh = summoner_display_history.getElementsByTagName("table")[0].getElementsByTagName("tbody")[0];
 const search_btn = document.getElementById("search-btn");
 
 //tabla de conversion de info de respuesta
@@ -232,20 +231,13 @@ function changeDisplay(elemento, visibilidad) {
   elemento.style.visibility = visibilidad;
 }
 
-function ocultarNotFound() {
-  const mensaje = document.getElementById("texto-blitz");
-  mensaje.textContent = "No se encontró la información.";
-  const imagen = document.getElementById("blitz");
-  mensaje.style.display = "none";
-  imagen.style.display = "none";
-  imagen.style.visibility = "hidden";
-}
 
-function mostrarNotFound() {
-  const mensaje = document.getElementById("texto-blitz");
-  mensaje.textContent = "No se encontró la información.";
-  const imagen = document.getElementById("blitz");
-  mensaje.style.display = "block";
-  imagen.style.display = "block";
-  imagen.style.visibility = "visible";
-}
+function mostrarNotFound(){
+  modal.showModal();
+  modal.classList.toggle("animado");
+};
+
+btn_modal.addEventListener("click",()=>{
+  modal.classList.toggle("animado");
+  modal.close();
+});

@@ -7,11 +7,12 @@ const BASE_URL_MATCH = "https://americas.api.riotgames.com";
 const searchForm = document.getElementById("search-form");
 const summonerName = searchForm.getElementsByTagName("input")[0];
 const search_btn = searchForm.getElementsByTagName("button")[0];
-console.log(summonerName);
+const modal = document.getElementById("modal");
+const btn_modal = document.getElementById("btn-modal");
+
 
 searchForm.addEventListener("submit", function (event) {
   event.preventDefault(); // QUE LA PAGINA NO SE RECARGUE AL ENVIAR EL FORMULARIO
-  ocultarNotFound();
   getSummonerInfo();
 });
 
@@ -172,25 +173,15 @@ function showSummonerMatchData(placement, players_eliminated, last_round) {
 // Obtener el elemento input
 const summonerInput = document.getElementById("summoner-input");
 
-//FUNCION QUE OCULTA EL NOTFOUND
+function mostrarNotFound(){
+  modal.showModal();
+  modal.classList.toggle("animado");
+};
 
-function ocultarNotFound() {
-  const mensaje = document.getElementById("texto-blitz");
-  mensaje.textContent = "No se encontró la información.";
-  const imagen = document.getElementById("blitz");
-  mensaje.style.display = "none";
-  imagen.style.display = "none";
-}
-
-//FUNCION QUE MUESTRA EL NOTFOUND
-
-function mostrarNotFound() {
-  const mensaje = document.getElementById("texto-blitz");
-  mensaje.textContent = "No se encontró la información.";
-  const imagen = document.getElementById("blitz");
-  mensaje.style.display = "block";
-  imagen.style.display = "block";
-}
+btn_modal.addEventListener("click",()=>{
+  modal.classList.toggle("animado");
+  modal.close();
+});
 
 // Función que limpia la tabla
 function clearTable() {
