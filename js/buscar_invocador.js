@@ -14,7 +14,7 @@ const search_btn = document.getElementById("search-btn");
 //tabla de conversion de info de respuesta
 const hashTable = { RANKED_FLEX_SR: "Flex", RANKED_SOLO_5x5: "Solo/Duo" };
 
-const API_KEY = "RGAPI-075b4862-26ee-4a73-9f41-5e09ac6c5b9d";
+const API_KEY = "RGAPI-4140c3b2-931d-4e81-8cee-2715e0359202";
 
 changeDisplay(summoner_display_history, "hidden");
 
@@ -49,7 +49,7 @@ search_btn.addEventListener("click", (event) => {
 
 //rellena informacion sobre el invocador en el div con id summoner_display
 async function rellenarInfoSummoner() {
-  ocultarNotFound();
+
   let basicData = await basicInfoSummoner();
   let rankData = await summonerRank(basicData);
   await summonerImage(
@@ -98,7 +98,6 @@ async function rellenarInfoPartidas() {
   //Pedidos de informacion
   let basicData = await basicInfoSummoner();
   let matchIdList = await matchIds(basicData.puuid);
-  console.log(matchIdList);
   //For encargado de hacer el pedido de informacion y pintado de informacion dependiendo de i
   if (matchIdList.length > 0) {
     for (let i = 0; i < 5; i++) {
@@ -157,6 +156,7 @@ async function summonerRank(data) {
   let res = await genericRequest(
     `https://la2.api.riotgames.com/lol/league/v4/entries/by-summoner/${data.id}?api_key=${API_KEY}`
   );
+  console.log(res);
   return res;
 }
 //retorna lista de ID para usar en la funcion matchInfo
