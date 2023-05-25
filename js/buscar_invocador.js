@@ -13,7 +13,17 @@ const search_btn = document.getElementById("search-btn");
 
 //tabla de conversion de info de respuesta
 const hashTable = { RANKED_FLEX_SR: "Flex", RANKED_SOLO_5x5: "Solo/Duo" };
-
+//tabla de conversion de rango a img url
+const rangoTable = {IRON:"hierro.png",
+                    BRONZE:"bronce.png",
+                    SILVER:"plata.png",
+                    GOLD:"oro.png",
+                    PLATINUM:"platino.png",
+                    DIAMOND:"diamante.png",
+                    MASTER:"maestro.png",
+                    GRAND_MASTER:"gran_maestro.png",
+                    CHALLENGER:"retador.png"};
+//Clave de la API
 const API_KEY = "RGAPI-4140c3b2-931d-4e81-8cee-2715e0359202";
 
 changeDisplay(summoner_display_history, "hidden");
@@ -61,11 +71,8 @@ async function rellenarInfoSummoner() {
   let aux = 2;
   //Se usa la funcion aux como iterador para completar dinamicamente la info para la cantidad de colas que haya (De no haber, hay li vacios)
   for (let i = 0; i < rankData.length; i++) {
-    summoner_data.children[aux].textContent = `${
-      hashTable[rankData[i].queueType]
-    } = ${rankData[i].tier} ${rankData[i].rank} (${Math.trunc(
-      (rankData[i].wins / (rankData[i].wins + rankData[i].losses)) * 100
-    )}%) `;
+    summoner_data.children[aux].textContent = `${hashTable[rankData[i].queueType]} = ${rankData[i].tier} ${rankData[i].rank} (${Math.trunc(
+    (rankData[i].wins / (rankData[i].wins + rankData[i].losses)) * 100)}%)`;
     aux++;
   }
   //Encargado de poner el winratio dependiendo de la cantidad de colas juegue la persona (De no jugar, li vacio)
@@ -208,6 +215,9 @@ function crearRegistro(infoPartida) {
 
   return tr;
 }
+
+
+
 
 function borrarHistorial() {
   summoner_display_history
