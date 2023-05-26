@@ -179,6 +179,7 @@ button:hover {
   #summoner_display {
     margin-bottom: 1.5em;
     padding: 5em;
+    min-width: 375px;
   }
 
   #summoner_display img {
@@ -516,6 +517,19 @@ button:hover {
   text-align: center;
 }
 
+#solo_q_rank, #flex_rank{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.info-rango-container, .info-partidas-container{
+  padding: .2rem 1rem;
+}
+
 .img-rank{
   visibility: visible !important;
+  width: 50px;
+  height: auto;
 }

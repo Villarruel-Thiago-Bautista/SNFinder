@@ -5,7 +5,7 @@ const summoner_image = summoner_display.getElementsByTagName("img")[0];
 const summoner_display_history = document.getElementById("summoner_display_history");
 
 //Clave de la API
-const API_KEY = "RGAPI-c6980b3d-ea87-4a6d-a416-4b10dfb10a0b";
+const API_KEY = "RGAPI-26a350ab-9ddd-47fd-bd6b-e28fa6492759";
 
 changeDisplay(summoner_display_history, "hidden");
 
@@ -21,6 +21,8 @@ if (window.navigator.userAgent.match(/android|iphone|kindle|ipad/i)) {
     if (event.isComposing || event.key === "Enter") {
       if (summoner_input.value != "") {
 
+        rellenarFigureLiga("RANKED_FLEX_SR");
+        rellenarFigureLiga("RANKED_SOLO_5X5");
         summoner_input.disabled = true;
         search_btn.disabled = true;
 
@@ -40,7 +42,8 @@ search_btn.addEventListener("click", async (event) => {
     "Boca yo te amo, siempre te sigo a todos lados, De corazón, pongan más huevos, Porque a boca lo queremos, Este amor que por vos siento, Boca es un sentimiento, De corazón, pongan más huevos, Porque a boca lo queremos, Ver campeón, y River Plate, Vos ya sabés, este año vas para la B, Y river plate, vos ya sabés, Que vos vas a correr, Y dale dale dale vo, Dale dale dale dale vo, Boca, vamo que ganamo, Boca yo te amo, siempre te sigo a todos lados, De corazón, pongan más huevos, Porque a boca lo queremos, Este amor que por vos siento, Boca es un sentimiento, De corazón, pongan más huevos, Porque a boca, lo queremos ver campeón, Y river plate, vos ya sabés, este año vas para la B, Y river plate, vos ya sabés, que vos vas a correr, Y dale, dale, dale vo, Dale, dale, dale, dale vo, Boca, vamo que ganamo"
   );
   if (summoner_input.value != "") {
-
+    rellenarFigureLiga("RANKED_FLEX_SR");
+    rellenarFigureLiga("RANKED_SOLO_5X5");
     summoner_input.disabled = true;
     search_btn.disabled = true;
 
@@ -123,31 +126,30 @@ async function matchInfo(match_id) {
 //rellena informacion sobre el invocador en el div con id summoner_display
 async function rellenarInfoSummoner(basicData) {
 
+  //Pedido de informacion relacionada con las partidas clasificatorias del jugador
   let rankData = await summonerRank(basicData);
-  await summonerImage(`https://ddragon.leagueoflegends.com/cdn/11.6.1/img/profileicon/${basicData.profileIconId}.png`);
-
+  //Se agrega el icono del jugador
+  summoner_image.src = `https://ddragon.leagueoflegends.com/cdn/11.6.1/img/profileicon/${basicData.profileIconId}.png`;
+  //Se hace visible la misma
   summoner_image.style.visibility = "initial";
+  //Se inserta el nombre del jugador
   summoner_data.children[0].textContent = summoner_input.value;
+  //Se inserta el nivel del jugador con la informacion recibida en basicData
   summoner_data.children[1].textContent = `Level: ${basicData.summonerLevel}`;
-  
   //Dinamicamente se carga el contenido de los elementos figure con el rango y tier del jugador
   for(let i = 0; i < rankData.length; i++){
-    rellenarFigureLiga(rankData[i]);
+    rellenarFigureLiga(rankData[i].queueType,rankData[i]);
   }
 }
 
-//a futuro rellena informacion sobre las partidas dinamicamente en un table
+//Rellena informacion sobre las partidas dinamicamente en un table
 async function rellenarInfoPartidas(basicData) {
-  let tbody = summoner_display_history
-    .getElementsByTagName("table")[0]
-    .getElementsByTagName("tbody")[0];
-
+  let tbody = summoner_display_history.getElementsByTagName("table")[0].getElementsByTagName("tbody")[0];
   //Preparaciones iniciales al HTML
   borrarHistorial();
   borrarInfoSummoner();
   changeDisplay(summoner_display_history, "hidden");
-  //Pedidos de informacion
-  //let basicData = await basicInfoSummoner();
+  //Se piden los IDs de las ultimas 20 partidas jugadas por el jugador
   let matchIdList = await matchIds(basicData.puuid);
   //For encargado de hacer el pedido de informacion y pintado de informacion dependiendo de i
   if (matchIdList.length > 0) {
@@ -175,17 +177,6 @@ async function rellenarInfoPartidas(basicData) {
   summoner_input.disabled = false;
 }
 
-async function summonerImage(url) {
-  summoner_image.src = "img/amarillo.png";
-  try {
-    let res = await fetch(url);
-    if (res.status == 200) {
-      summoner_image.src = url;
-    }
-  } catch (e) {
-    return null;
-  }
-}
 
 //retorna informacion sobre el jugador en cuestion en la partida dada por matchData
 function player_matchData(matchData, pid) {
@@ -197,7 +188,8 @@ function player_matchData(matchData, pid) {
 }
 
 
-function rellenarFigureLiga(infoCola){
+function rellenarFigureLiga(queue,infoCola = {tier : "", rank: "", losses: "", wins: ""}){
+  console.log(infoCola);
   //Objeto JSON que contiene los diferentes nombres de las imagenes por liga
   const ligas = {
     "IRON": {
@@ -215,44 +207,44 @@ function rellenarFigureLiga(infoCola){
     "SILVER": {
       "IV": "Silver_4.jpg",
       "III": "Silver_3.jpg",
-      "II": "Silver_2.jgp",
+      "II": "Silver_2.jpg",
       "I": "Silver_1.jpg",
     },
     "GOLD": {
       "IV": "Gold_4.jpg",
-      "III": "Gold_3.jgp",
-      "II": "Gold_2.jgp",
-      "I": "Gold_1.jgp",
+      "III": "Gold_3.jpg",
+      "II": "Gold_2.jpg",
+      "I": "Gold_1.jpg",
     },
     "PLATINUM": {
-      "IV": "Platinum_4.jgp",
-      "III": "Platinum_3.jgp",
-      "II": "Platinum_2.jgp",
-      "I": "Platinum_1.jgp",
+      "IV": "Platinum_4.jpg",
+      "III": "Platinum_3.jpg",
+      "II": "Platinum_2.jpg",
+      "I": "Platinum_1.jpg",
     },
     "DIAMOND": {
-      "IV": "Diamond_4.jgp",
-      "III": "Diamond_3.jgp",
-      "II": "Diamond_2.jgp",
-      "I": "Diamond_1.jgp",
+      "IV": "Diamond_4.jpg",
+      "III": "Diamond_3.jpg",
+      "II": "Diamond_2.jpg",
+      "I": "Diamond_1.jpg",
     },
     "MASTER": {
-      "IV": "Master_4.jgp",
-      "III": "Master_3.jgp",
-      "II": "Master_2.jgp",
-      "I": "Master_1.jgp",
+      "IV": "Master_4.jpg",
+      "III": "Master_3.jpg",
+      "II": "Master_2.jpg",
+      "I": "Master_1.jpg",
     },
     "GRANDMASTER": {
-      "IV": "Grandmaster_4.jgp",
-      "III": "Grandmaster_3.jgp",
-      "II": "Grandmaster_2.jgp",
-      "I": "Grandmaster_1.jgp",
+      "IV": "Grandmaster_4.jpg",
+      "III": "Grandmaster_3.jpg",
+      "II": "Grandmaster_2.jpg",
+      "I": "Grandmaster_1.jpg",
     },
     "CHALLENGER": {
-      "IV": "Challenger_4.jgp",
-      "III": "Challenger_3.jgp",
-      "II": "Challenger_2.jgp",
-      "I": "Challenger_1.jgp",
+      "IV": "Challenger_4.jpg",
+      "III": "Challenger_3.jpg",
+      "II": "Challenger_2.jpg",
+      "I": "Challenger_1.jpg",
     },
   }
   //tabla de conversion de info de respuesta
@@ -260,12 +252,21 @@ function rellenarFigureLiga(infoCola){
   //Variable usada para definir donde escribir
   let aux;
   //Eleccion del valor de aux
-  infoCola.queueType == "RANKED_FLEX_SR" ? aux = 1 : aux = 0;
-  //Se agrega contenido dinamicamente en el contenedor correspondiente dependiendo del valor de aux
-  document.getElementsByClassName("info-rango-container")[aux].getElementsByTagName("img")[0].src = `img/rangos/${ligas[infoCola.tier][infoCola.rank]}`;
-  document.getElementsByClassName("info-rango-container")[aux].getElementsByTagName("p")[0].textContent = `${infoCola.tier} ${infoCola.rank}`;
-  document.getElementsByClassName("info-partidas-container")[aux].getElementsByTagName("p")[0].textContent = `${infoCola.wins}W - ${infoCola.losses}L`;
-  document.getElementsByClassName("info-partidas-container")[aux].getElementsByTagName("p")[1].textContent = calcularWinratio(infoCola.wins,infoCola.losses);
+  queue == "RANKED_FLEX_SR" ? aux = 1 : aux = 0;
+  //Se agrega contenido dinamicamente en el contenedor correspondiente dependiendo del valor de aux y si es un objeto NO vacio
+  if(infoCola.tier == ""){
+    document.getElementsByClassName("info-rango-container")[aux].getElementsByTagName("img")[0].src = "";
+    document.getElementsByClassName("info-rango-container")[aux].getElementsByTagName("p")[0].textContent = "";
+    document.getElementsByClassName("info-partidas-container")[aux].getElementsByTagName("p")[0].textContent = "";
+    document.getElementsByClassName("info-partidas-container")[aux].getElementsByTagName("p")[1].textContent = "";  
+  }
+  else{
+    document.getElementsByClassName("info-rango-container")[aux].getElementsByTagName("img")[0].src = `img/rangos/${ligas[infoCola.tier][infoCola.rank]}`;
+    document.getElementsByClassName("info-rango-container")[aux].getElementsByTagName("p")[0].textContent = `${infoCola.tier} ${infoCola.rank}`;
+    document.getElementsByClassName("info-partidas-container")[aux].getElementsByTagName("p")[0].textContent = `${infoCola.wins}W - ${infoCola.losses}L`;
+    document.getElementsByClassName("info-partidas-container")[aux].getElementsByTagName("p")[1].textContent = calcularWinratio(infoCola.wins,infoCola.losses);
+  
+  }
 }
 
 function calcularWinratio(wins,losses){
@@ -313,4 +314,3 @@ function mostrarNotFound(){
   modal.showModal();
   modal.classList.toggle("animado");
 };
-
