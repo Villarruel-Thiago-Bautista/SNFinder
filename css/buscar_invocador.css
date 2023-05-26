@@ -507,3 +507,15 @@ button:hover {
 #modal img{
   border-radius: 100%;
 }
+
+#ranks-container{
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+}
+
+.img-rank{
+  visibility: visible !important;
+}

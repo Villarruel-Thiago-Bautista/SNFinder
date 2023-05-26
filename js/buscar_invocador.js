@@ -13,18 +13,9 @@ const search_btn = document.getElementById("search-btn");
 
 //tabla de conversion de info de respuesta
 const hashTable = { RANKED_FLEX_SR: "Flex", RANKED_SOLO_5x5: "Solo/Duo" };
-//tabla de conversion de rango a img url
-const rangoTable = {IRON:"hierro.png",
-                    BRONZE:"bronce.png",
-                    SILVER:"plata.png",
-                    GOLD:"oro.png",
-                    PLATINUM:"platino.png",
-                    DIAMOND:"diamante.png",
-                    MASTER:"maestro.png",
-                    GRAND_MASTER:"gran_maestro.png",
-                    CHALLENGER:"retador.png"};
+
 //Clave de la API
-const API_KEY = "RGAPI-4140c3b2-931d-4e81-8cee-2715e0359202";
+const API_KEY = "RGAPI-c6980b3d-ea87-4a6d-a416-4b10dfb10a0b";
 
 changeDisplay(summoner_display_history, "hidden");
 
@@ -62,14 +53,18 @@ async function rellenarInfoSummoner() {
 
   let basicData = await basicInfoSummoner();
   let rankData = await summonerRank(basicData);
-  await summonerImage(
-    `https://ddragon.leagueoflegends.com/cdn/11.6.1/img/profileicon/${basicData.profileIconId}.png`
-  );
+  await summonerImage(`https://ddragon.leagueoflegends.com/cdn/11.6.1/img/profileicon/${basicData.profileIconId}.png`);
+
   summoner_image.style.visibility = "initial";
   summoner_data.children[0].textContent = summoner_input.value;
   summoner_data.children[1].textContent = `Level: ${basicData.summonerLevel}`;
-  let aux = 2;
-  //Se usa la funcion aux como iterador para completar dinamicamente la info para la cantidad de colas que haya (De no haber, hay li vacios)
+  
+  //Dinamicamente se carga el contenido de los elementos figure con el rango y tier del jugador
+  for(let i = 0; i < rankData.length; i++){
+    rellenarFigureLiga(rankData[i]);
+  }
+
+  
   for (let i = 0; i < rankData.length; i++) {
     summoner_data.children[aux].textContent = `${hashTable[rankData[i].queueType]} = ${rankData[i].tier} ${rankData[i].rank} (${Math.trunc(
     (rankData[i].wins / (rankData[i].wins + rankData[i].losses)) * 100)}%)`;
@@ -202,6 +197,80 @@ function player_matchData(matchData, pid) {
   }
 }
 
+
+function rellenarFigureLiga(infoCola){
+  //Objeto JSON que contiene los diferentes nombres de las imagenes por liga
+  const ligas = {
+    "IRON": {
+      "IV": "Iron_4.jpg",
+      "III": "Iron_3.jpg",
+      "II": "Iron_2.jpg",
+      "I": "Iron_1.jpg",
+    },
+    "BRONZE": {
+      "IV": "Bronze_4.jpg",
+      "III": "Bronze_3.jpg",
+      "II": "Bronze_2.jpg",
+      "I": "Bronze_1.jpg",
+    },
+    "SILVER": {
+      "IV": "Silver_4.jpg",
+      "III": "Silver_3.jpg",
+      "II": "Silver_2.jgp",
+      "I": "Silver_1.jpg",
+    },
+    "GOLD": {
+      "IV": "Gold_4.jpg",
+      "III": "Gold_3.jgp",
+      "II": "Gold_2.jgp",
+      "I": "Gold_1.jgp",
+    },
+    "PLATINUM": {
+      "IV": "Platinum_4.jgp",
+      "III": "Platinum_3.jgp",
+      "II": "Platinum_2.jgp",
+      "I": "Platinum_1.jgp",
+    },
+    "DIAMOND": {
+      "IV": "Diamond_4.jgp",
+      "III": "Diamond_3.jgp",
+      "II": "Diamond_2.jgp",
+      "I": "Diamond_1.jgp",
+    },
+    "MASTER": {
+      "IV": "Master_4.jgp",
+      "III": "Master_3.jgp",
+      "II": "Master_2.jgp",
+      "I": "Master_1.jgp",
+    },
+    "GRANDMASTER": {
+      "IV": "Grandmaster_4.jgp",
+      "III": "Grandmaster_3.jgp",
+      "II": "Grandmaster_2.jgp",
+      "I": "Grandmaster_1.jgp",
+    },
+    "CHALLENGER": {
+      "IV": "Challenger_4.jgp",
+      "III": "Challenger_3.jgp",
+      "II": "Challenger_2.jgp",
+      "I": "Challenger_1.jgp",
+    },
+  }
+  let aux;
+  
+  infoCola.queueType == "RANKED_FLEX_SR" ? aux = 1 : aux = 0;
+
+  document.getElementsByClassName("info-rango-container")[aux].getElementsByTagName("img")[0].src = `img/rangos/${ligas[infoCola.tier][infoCola.rank]}`;
+  document.getElementsByClassName("info-rango-container")[aux].getElementsByTagName("p")[0].textContent = `${infoCola.tier} ${infoCola.rank}`;
+  document.getElementsByClassName("info-partidas-container")[aux].getElementsByTagName("p")[0].textContent = `${infoCola.wins}W - ${infoCola.losses}L`;
+  document.getElementsByClassName("info-partidas-container")[aux].getElementsByTagName("p")[1].textContent = calcularWinratio(infoCola.wins,infoCola.losses);
+}
+
+function calcularWinratio(wins,losses){
+  return `Winrate ${Math.trunc((wins / (wins + losses)) * 100)}%`;
+}
+
+
 //Crea y retorna un elemento tr con la cantidad de sub-elementos td como informacion se necesite en la tabla
 function crearRegistro(infoPartida) {
   let tr = document.createElement("tr");
@@ -215,9 +284,6 @@ function crearRegistro(infoPartida) {
 
   return tr;
 }
-
-
-
 
 function borrarHistorial() {
   summoner_display_history
