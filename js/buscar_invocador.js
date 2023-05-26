@@ -1,130 +1,68 @@
-//Constantes de elementos en pantalla
-const summoner_input = document.getElementById("summoner_input");
-const region_input = document.getElementById("region_input");
+//Elementos que son escuchados por muchas funciones
 const summoner_display = document.getElementById("summoner_display");
 const summoner_data = summoner_display.getElementsByTagName("ul")[0];
 const summoner_image = summoner_display.getElementsByTagName("img")[0];
 const summoner_display_history = document.getElementById("summoner_display_history");
-const modal = document.getElementById("modal");
-const btn_modal = document.getElementById("btn-modal");
-
-const body_sdh = summoner_display_history.getElementsByTagName("table")[0].getElementsByTagName("tbody")[0];
-const search_btn = document.getElementById("search-btn");
-
-//tabla de conversion de info de respuesta
-const hashTable = { RANKED_FLEX_SR: "Flex", RANKED_SOLO_5x5: "Solo/Duo" };
 
 //Clave de la API
 const API_KEY = "RGAPI-c6980b3d-ea87-4a6d-a416-4b10dfb10a0b";
 
 changeDisplay(summoner_display_history, "hidden");
 
-//Disparador busqueda via enter
 
+// 🔽🔽🔽 EVENT LISTENERS 🔽🔽🔽
+
+//Elemento a escuchar
+const summoner_input = document.getElementById("summoner_input");
+//Busqueda con enter solo en PC
 if (window.navigator.userAgent.match(/android|iphone|kindle|ipad/i)) {
 } else {
-  summoner_input.addEventListener("keydown", (event) => {
+  summoner_input.addEventListener("keydown", async (event) => {
     if (event.isComposing || event.key === "Enter") {
       if (summoner_input.value != "") {
+
         summoner_input.disabled = true;
         search_btn.disabled = true;
-        rellenarInfoSummoner();
-        rellenarInfoPartidas();
+
+        let basicData = await basicInfoSummoner();
+        rellenarInfoSummoner(basicData);
+        rellenarInfoPartidas(basicData);
       }
     }
   });
 }
 
-//Disparador busqueda via boton
-search_btn.addEventListener("click", (event) => {
+//Elemento a escuchar
+const search_btn = document.getElementById("search-btn");
+//Busqueda via click en boton
+search_btn.addEventListener("click", async (event) => {
   console.log(
     "Boca yo te amo, siempre te sigo a todos lados, De corazón, pongan más huevos, Porque a boca lo queremos, Este amor que por vos siento, Boca es un sentimiento, De corazón, pongan más huevos, Porque a boca lo queremos, Ver campeón, y River Plate, Vos ya sabés, este año vas para la B, Y river plate, vos ya sabés, Que vos vas a correr, Y dale dale dale vo, Dale dale dale dale vo, Boca, vamo que ganamo, Boca yo te amo, siempre te sigo a todos lados, De corazón, pongan más huevos, Porque a boca lo queremos, Este amor que por vos siento, Boca es un sentimiento, De corazón, pongan más huevos, Porque a boca, lo queremos ver campeón, Y river plate, vos ya sabés, este año vas para la B, Y river plate, vos ya sabés, que vos vas a correr, Y dale, dale, dale vo, Dale, dale, dale, dale vo, Boca, vamo que ganamo"
   );
   if (summoner_input.value != "") {
+
     summoner_input.disabled = true;
     search_btn.disabled = true;
-    rellenarInfoSummoner();
-    rellenarInfoPartidas();
+
+    let basicData = await basicInfoSummoner();
+    rellenarInfoSummoner(basicData);
+    rellenarInfoPartidas(basicData);
   }
 });
 
-//rellena informacion sobre el invocador en el div con id summoner_display
-async function rellenarInfoSummoner() {
+//Elemento a escuchar
+const btn_modal = document.getElementById("btn-modal");
+//Desaparecer el modal de not found
+btn_modal.addEventListener("click",()=>{
+  const modal = document.getElementById("modal");
+  modal.classList.toggle("animado");
+  modal.close();
+});
 
-  let basicData = await basicInfoSummoner();
-  let rankData = await summonerRank(basicData);
-  await summonerImage(`https://ddragon.leagueoflegends.com/cdn/11.6.1/img/profileicon/${basicData.profileIconId}.png`);
+// 🔼🔼🔼 EVENT LISTENERS 🔼🔼🔼
 
-  summoner_image.style.visibility = "initial";
-  summoner_data.children[0].textContent = summoner_input.value;
-  summoner_data.children[1].textContent = `Level: ${basicData.summonerLevel}`;
-  
-  //Dinamicamente se carga el contenido de los elementos figure con el rango y tier del jugador
-  for(let i = 0; i < rankData.length; i++){
-    rellenarFigureLiga(rankData[i]);
-  }
 
-  
-  for (let i = 0; i < rankData.length; i++) {
-    summoner_data.children[aux].textContent = `${hashTable[rankData[i].queueType]} = ${rankData[i].tier} ${rankData[i].rank} (${Math.trunc(
-    (rankData[i].wins / (rankData[i].wins + rankData[i].losses)) * 100)}%)`;
-    aux++;
-  }
-  //Encargado de poner el winratio dependiendo de la cantidad de colas juegue la persona (De no jugar, li vacio)
-  if (rankData.length == 2) {
-    summoner_data.children[4].textContent = `Winratio ranked ${Math.trunc(
-      ((rankData[0].wins + rankData[1].wins) /
-        (rankData[0].wins +
-          rankData[1].wins +
-          rankData[0].losses +
-          rankData[1].losses)) *
-        100
-    )}%`;
-  } else if (rankData.length == 1) {
-    summoner_data.children[4].textContent = `Winratio ranked ${Math.trunc(
-      (rankData[0].wins / (rankData[0].wins + rankData[0].losses)) * 100
-    )}%`;
-  }
-}
-
-//a futuro rellena informacion sobre las partidas dinamicamente en un table
-async function rellenarInfoPartidas() {
-  let tbody = summoner_display_history
-    .getElementsByTagName("table")[0]
-    .getElementsByTagName("tbody")[0];
-
-  //Preparaciones iniciales al HTML
-  borrarHistorial();
-  borrarInfoSummoner();
-  changeDisplay(summoner_display_history, "hidden");
-  //Pedidos de informacion
-  let basicData = await basicInfoSummoner();
-  let matchIdList = await matchIds(basicData.puuid);
-  //For encargado de hacer el pedido de informacion y pintado de informacion dependiendo de i
-  if (matchIdList.length > 0) {
-    for (let i = 0; i < 5; i++) {
-      let match_data = await matchInfo(matchIdList[i]);
-      let player_match_data = await player_matchData(
-        match_data,
-        basicData.puuid
-      );
-      let outcome = player_match_data.win ? "Victory" : "Defeat";
-      tbody.appendChild(
-        crearRegistro([
-          player_match_data.championName,
-          player_match_data.kills,
-          player_match_data.deaths,
-          player_match_data.assists,
-          outcome,
-        ])
-      );
-    }
-    //Vuelve a estar visible el historial, ya completo
-    changeDisplay(summoner_display_history, "visible");
-  }
-  search_btn.disabled = false;
-  summoner_input.disabled = false;
-}
+// 🔽🔽🔽 REQUESTS A LA API DE LOL 🔽🔽🔽
 
 //Funcion para pedir toda la info buscando el estandar DRY uwu
 async function genericRequest(endpoint) {
@@ -174,6 +112,67 @@ async function matchInfo(match_id) {
     `https://americas.api.riotgames.com/lol/match/v5/matches/${match_id}?api_key=${API_KEY}`
   );
   return res;
+}
+
+// 🔼🔼🔼 REQUESTS A LA API DE LOL 🔼🔼🔼
+
+
+
+
+
+//rellena informacion sobre el invocador en el div con id summoner_display
+async function rellenarInfoSummoner(basicData) {
+
+  let rankData = await summonerRank(basicData);
+  await summonerImage(`https://ddragon.leagueoflegends.com/cdn/11.6.1/img/profileicon/${basicData.profileIconId}.png`);
+
+  summoner_image.style.visibility = "initial";
+  summoner_data.children[0].textContent = summoner_input.value;
+  summoner_data.children[1].textContent = `Level: ${basicData.summonerLevel}`;
+  
+  //Dinamicamente se carga el contenido de los elementos figure con el rango y tier del jugador
+  for(let i = 0; i < rankData.length; i++){
+    rellenarFigureLiga(rankData[i]);
+  }
+}
+
+//a futuro rellena informacion sobre las partidas dinamicamente en un table
+async function rellenarInfoPartidas(basicData) {
+  let tbody = summoner_display_history
+    .getElementsByTagName("table")[0]
+    .getElementsByTagName("tbody")[0];
+
+  //Preparaciones iniciales al HTML
+  borrarHistorial();
+  borrarInfoSummoner();
+  changeDisplay(summoner_display_history, "hidden");
+  //Pedidos de informacion
+  //let basicData = await basicInfoSummoner();
+  let matchIdList = await matchIds(basicData.puuid);
+  //For encargado de hacer el pedido de informacion y pintado de informacion dependiendo de i
+  if (matchIdList.length > 0) {
+    for (let i = 0; i < 5; i++) {
+      let match_data = await matchInfo(matchIdList[i]);
+      let player_match_data = await player_matchData(
+        match_data,
+        basicData.puuid
+      );
+      let outcome = player_match_data.win ? "Victory" : "Defeat";
+      tbody.appendChild(
+        crearRegistro([
+          player_match_data.championName,
+          player_match_data.kills,
+          player_match_data.deaths,
+          player_match_data.assists,
+          outcome,
+        ])
+      );
+    }
+    //Vuelve a estar visible el historial, ya completo
+    changeDisplay(summoner_display_history, "visible");
+  }
+  search_btn.disabled = false;
+  summoner_input.disabled = false;
 }
 
 async function summonerImage(url) {
@@ -256,10 +255,13 @@ function rellenarFigureLiga(infoCola){
       "I": "Challenger_1.jgp",
     },
   }
+  //tabla de conversion de info de respuesta
+  const hashTable = { RANKED_FLEX_SR: "Flex", RANKED_SOLO_5x5: "Solo/Duo" }; 
+  //Variable usada para definir donde escribir
   let aux;
-  
+  //Eleccion del valor de aux
   infoCola.queueType == "RANKED_FLEX_SR" ? aux = 1 : aux = 0;
-
+  //Se agrega contenido dinamicamente en el contenedor correspondiente dependiendo del valor de aux
   document.getElementsByClassName("info-rango-container")[aux].getElementsByTagName("img")[0].src = `img/rangos/${ligas[infoCola.tier][infoCola.rank]}`;
   document.getElementsByClassName("info-rango-container")[aux].getElementsByTagName("p")[0].textContent = `${infoCola.tier} ${infoCola.rank}`;
   document.getElementsByClassName("info-partidas-container")[aux].getElementsByTagName("p")[0].textContent = `${infoCola.wins}W - ${infoCola.losses}L`;
@@ -295,9 +297,7 @@ function borrarInfoSummoner() {
   summoner_image.src = "";
   summoner_data.children[0].textContent = "";
   summoner_data.children[1].textContent = "";
-  summoner_data.children[2].textContent = "";
-  summoner_data.children[3].textContent = "";
-  summoner_data.children[4].textContent = "";
+
   summoner_display_history
     .getElementsByTagName("table")[0]
     .getElementsByTagName("tbody")[0].innerHTML = "";
@@ -309,11 +309,8 @@ function changeDisplay(elemento, visibilidad) {
 
 
 function mostrarNotFound(){
+  const modal = document.getElementById("modal");
   modal.showModal();
   modal.classList.toggle("animado");
 };
 
-btn_modal.addEventListener("click",()=>{
-  modal.classList.toggle("animado");
-  modal.close();
-});
