@@ -1,30 +1,30 @@
 //Elementos que son escuchados por muchas funciones
-const summoner_display = document.getElementById("summoner_display");
-const summoner_data = summoner_display.getElementsByTagName("ul")[0];
-const summoner_image = summoner_display.getElementsByTagName("img")[0];
-const summoner_display_history = document.getElementById("summoner_display_history");
+const $summoner_display = document.getElementById("summoner_display");
+const $summoner_data = $summoner_display.getElementsByTagName("ul")[0];
+const $summoner_image = $summoner_display.getElementsByTagName("img")[0];
+const $match_history = document.getElementById("summoner_display_history");
 
 //Clave de la API
-const API_KEY = "RGAPI-26a350ab-9ddd-47fd-bd6b-e28fa6492759";
+const API_KEY = "RGAPI-6f3cb600-6810-40df-b05b-720f71e16834";
 
-changeDisplay(summoner_display_history, "hidden");
+changeDisplay($match_history, "hidden");
 
 
 // 🔽🔽🔽 EVENT LISTENERS 🔽🔽🔽
 
 //Elemento a escuchar
-const summoner_input = document.getElementById("summoner_input");
+const $name_input = document.getElementById("summoner_input");
 //Busqueda con enter solo en PC
 if (window.navigator.userAgent.match(/android|iphone|kindle|ipad/i)) {
 } else {
-  summoner_input.addEventListener("keydown", async (event) => {
+  $name_input.addEventListener("keydown", async (event) => {
     if (event.isComposing || event.key === "Enter") {
-      if (summoner_input.value != "") {
+      if ($name_input.value != "") {
 
         rellenarFigureLiga("RANKED_FLEX_SR");
         rellenarFigureLiga("RANKED_SOLO_5X5");
-        summoner_input.disabled = true;
-        search_btn.disabled = true;
+        $name_input.disabled = true;
+        $search_btn.disabled = true;
 
         let basicData = await basicInfoSummoner();
         rellenarInfoSummoner(basicData);
@@ -35,17 +35,17 @@ if (window.navigator.userAgent.match(/android|iphone|kindle|ipad/i)) {
 }
 
 //Elemento a escuchar
-const search_btn = document.getElementById("search-btn");
+const $search_btn = document.getElementById("search-btn");
 //Busqueda via click en boton
-search_btn.addEventListener("click", async (event) => {
+$search_btn.addEventListener("click", async (event) => {
   console.log(
     "Boca yo te amo, siempre te sigo a todos lados, De corazón, pongan más huevos, Porque a boca lo queremos, Este amor que por vos siento, Boca es un sentimiento, De corazón, pongan más huevos, Porque a boca lo queremos, Ver campeón, y River Plate, Vos ya sabés, este año vas para la B, Y river plate, vos ya sabés, Que vos vas a correr, Y dale dale dale vo, Dale dale dale dale vo, Boca, vamo que ganamo, Boca yo te amo, siempre te sigo a todos lados, De corazón, pongan más huevos, Porque a boca lo queremos, Este amor que por vos siento, Boca es un sentimiento, De corazón, pongan más huevos, Porque a boca, lo queremos ver campeón, Y river plate, vos ya sabés, este año vas para la B, Y river plate, vos ya sabés, que vos vas a correr, Y dale, dale, dale vo, Dale, dale, dale, dale vo, Boca, vamo que ganamo"
   );
-  if (summoner_input.value != "") {
+  if ($name_input.value != "") {
     rellenarFigureLiga("RANKED_FLEX_SR");
     rellenarFigureLiga("RANKED_SOLO_5X5");
-    summoner_input.disabled = true;
-    search_btn.disabled = true;
+    $name_input.disabled = true;
+    $search_btn.disabled = true;
 
     let basicData = await basicInfoSummoner();
     rellenarInfoSummoner(basicData);
@@ -54,12 +54,12 @@ search_btn.addEventListener("click", async (event) => {
 });
 
 //Elemento a escuchar
-const btn_modal = document.getElementById("btn-modal");
+const $btn_modal = document.getElementById("btn-modal");
 //Desaparecer el modal de not found
-btn_modal.addEventListener("click",()=>{
-  const modal = document.getElementById("modal");
-  modal.classList.toggle("animado");
-  modal.close();
+$btn_modal.addEventListener("click",()=>{
+  const $modal = document.getElementById("modal");
+  $modal.classList.toggle("animado");
+  $modal.close();
 });
 
 // 🔼🔼🔼 EVENT LISTENERS 🔼🔼🔼
@@ -83,15 +83,15 @@ async function genericRequest(endpoint) {
 //retorna informacion auxiliar y nivel de invocador
 async function basicInfoSummoner() {
   let res = await genericRequest(
-    `https://la2.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summoner_input.value}?api_key=${API_KEY}`
+    `https://la2.api.riotgames.com/lol/summoner/v4/summoners/by-name/${$name_input.value}?api_key=${API_KEY}`
   );
   if (res != null) {
     return res;
   } else {
     mostrarNotFound();
     console.log("404");
-    search_btn.disabled = false;
-    summoner_input.disabled = false;
+    $search_btn.disabled = false;
+    $name_input.disabled = false;
   }
 }
 //retorna el rango del invocador (nada, soloq, flex, soloq y flex)
@@ -129,13 +129,13 @@ async function rellenarInfoSummoner(basicData) {
   //Pedido de informacion relacionada con las partidas clasificatorias del jugador
   let rankData = await summonerRank(basicData);
   //Se agrega el icono del jugador
-  summoner_image.src = `https://ddragon.leagueoflegends.com/cdn/11.6.1/img/profileicon/${basicData.profileIconId}.png`;
+  $summoner_image.src = `https://ddragon.leagueoflegends.com/cdn/11.6.1/img/profileicon/${basicData.profileIconId}.png`;
   //Se hace visible la misma
-  summoner_image.style.visibility = "initial";
+  $summoner_image.style.visibility = "initial";
   //Se inserta el nombre del jugador
-  summoner_data.children[0].textContent = summoner_input.value;
+  $summoner_data.children[0].textContent = $name_input.value;
   //Se inserta el nivel del jugador con la informacion recibida en basicData
-  summoner_data.children[1].textContent = `Level: ${basicData.summonerLevel}`;
+  $summoner_data.children[1].textContent = `Level: ${basicData.summonerLevel}`;
   //Dinamicamente se carga el contenido de los elementos figure con el rango y tier del jugador
   for(let i = 0; i < rankData.length; i++){
     rellenarFigureLiga(rankData[i].queueType,rankData[i]);
@@ -144,11 +144,11 @@ async function rellenarInfoSummoner(basicData) {
 
 //Rellena informacion sobre las partidas dinamicamente en un table
 async function rellenarInfoPartidas(basicData) {
-  let tbody = summoner_display_history.getElementsByTagName("table")[0].getElementsByTagName("tbody")[0];
+  let tbody = $match_history.getElementsByTagName("table")[0].getElementsByTagName("tbody")[0];
   //Preparaciones iniciales al HTML
   borrarHistorial();
   borrarInfoSummoner();
-  changeDisplay(summoner_display_history, "hidden");
+  changeDisplay($match_history, "hidden");
   //Se piden los IDs de las ultimas 20 partidas jugadas por el jugador
   let matchIdList = await matchIds(basicData.puuid);
   //For encargado de hacer el pedido de informacion y pintado de informacion dependiendo de i
@@ -171,10 +171,10 @@ async function rellenarInfoPartidas(basicData) {
       );
     }
     //Vuelve a estar visible el historial, ya completo
-    changeDisplay(summoner_display_history, "visible");
+    changeDisplay($match_history, "visible");
   }
-  search_btn.disabled = false;
-  summoner_input.disabled = false;
+  $search_btn.disabled = false;
+  $name_input.disabled = false;
 }
 
 
@@ -280,8 +280,18 @@ function crearRegistro(infoPartida) {
 
   for (let i = 0; i < infoPartida.length; i++) {
     let td = document.createElement("td");
-    tdText = document.createTextNode(infoPartida[i]);
-    td.appendChild(tdText);
+    if(i == 0){
+      let imagen = document.createElement("img");
+      imagen.src = `http://ddragon.leagueoflegends.com/cdn/13.10.1/img/champion/${infoPartida[0]}.png`;
+      imagen.alt = `Imagenn del personaje ${infoPartida[0]}`;
+      imagen.title = infoPartida[0];
+      imagen.classList.add("imagen-campeon");
+      td.appendChild(imagen);
+    }
+    else{
+      tdText = document.createTextNode(infoPartida[i]);
+      td.appendChild(tdText);
+    }
     tr.appendChild(td);
   }
 
@@ -289,17 +299,17 @@ function crearRegistro(infoPartida) {
 }
 
 function borrarHistorial() {
-  summoner_display_history
+  $match_history
     .getElementsByTagName("table")[0]
     .getElementsByTagName("tbody")[0].innerHTML = "";
 }
 
 function borrarInfoSummoner() {
-  summoner_image.src = "";
-  summoner_data.children[0].textContent = "";
-  summoner_data.children[1].textContent = "";
+  $summoner_image.src = "";
+  $summoner_data.children[0].textContent = "";
+  $summoner_data.children[1].textContent = "";
 
-  summoner_display_history
+  $match_history
     .getElementsByTagName("table")[0]
     .getElementsByTagName("tbody")[0].innerHTML = "";
 }
@@ -310,7 +320,7 @@ function changeDisplay(elemento, visibilidad) {
 
 
 function mostrarNotFound(){
-  const modal = document.getElementById("modal");
-  modal.showModal();
-  modal.classList.toggle("animado");
+  const $modal = document.getElementById("modal");
+  $modal.showModal();
+  $modal.classList.toggle("animado");
 };
