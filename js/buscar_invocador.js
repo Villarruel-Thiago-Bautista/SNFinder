@@ -5,7 +5,7 @@ const $summoner_image = $summoner_display.getElementsByTagName("img")[0];
 const $match_history = document.getElementById("summoner_display_history");
 
 //Clave de la API
-const API_KEY = "RGAPI-6f3cb600-6810-40df-b05b-720f71e16834";
+const API_KEY = "RGAPI-86a8a8e5-2dec-49ad-89b1-4388408f2d36";
 
 changeDisplay($match_history, "hidden");
 
