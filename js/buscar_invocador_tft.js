@@ -1,5 +1,5 @@
 /* INFO DE LA API */
-const API_KEY = "RGAPI-4140c3b2-931d-4e81-8cee-2715e0359202";
+const API_KEY = "RGAPI-05aaa489-8d00-4686-a863-5fb0481533f1";
 const BASE_URL = "https://la2.api.riotgames.com";
 const BASE_URL_MATCH = "https://americas.api.riotgames.com";
 
