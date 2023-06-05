@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="HandheldFriendly" content="true" />
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <link
+      rel="shortcut icon"
+      href="img/icono-pagina-1.ico"
+      type="image/x-icon"
+    />
+    <script
+      src="https://kit.fontawesome.com/1305786c57.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>SNFinder</title>
+  </head>
+
+  <body>
+    <!--Header-->
+    <header>
+      <div class="container">
+        <a href="index.html" class="logo">SNFINDER</a>
+        <nav>
+          <div class="menu-icon">
+            <i class="fa-solid fa-bars"></i>
+          </div>
+          <ul class="menu">
+            <li><a href="index.html">INICIO</a></li>
+            <li><a href="buscar_invocador.html">BUSCAR INVOCADOR</a></li>
+            <li><a href="buscar_invocador_tft.html">TFT</a></li>
+            <li><a href="sobre_nosotros.html">SOBRE NOSOTROS</a></li>
+            <div class="dark-mode">
+              <label for="toggle" id="label_toggle"
+                ><i class="fa-solid fa-lightbulb"></i
+              ></label>
+              <input type="checkbox" id="toggle" />
+            </div>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!--Main-->
+    <main>
+      <!--Section one-->
+      <section id="hero">
+        <h1>
+          Busca estadisticas de jugadores <br />
+          de toda la región
+        </h1>
+        <form action="#about-snfinder">
+          <button>QUIERO SABER MAS</button>
+        </form>
+      </section>
+
+      <!--Section two-->
+      <section id="about-snfinder">
+        <hr />
+        <div class="about-container">
+          <div class="img-container">
+            <img
+              src="img/about-emote.png"
+              alt="emote de vi"
+              class="about-img"
+            />
+          </div>
+          <div class="description-container">
+            <h2>Somos <span>SNFinder</span></h2>
+            <p>
+              Una herramienta diseñada para que los jugadores de League of
+              Legends pertenecientes al servidor de Latinoamérica Sur puedan
+              buscar información y estadisticas relacionadas con el perfil de
+              sus openentes y aliados en el juego. <br />
+              Contamos con una amplia base de datos actualizada regularmente con
+              información detallada sobre cada jugador registrado en dicho
+              servidor.
+            </p>
+          </div>
+          <form action="#offerstranslate">
+            <button>NUESTRA OFERTA</button>
+          </form>
+        </div>
+        <br />
+      </section>
+
+      <!--Section three-->
+      <section id="our-offer">
+        <hr />
+        <h2 id="offerstranslate">¿Qué ofrecemos?</h2>
+        <div class="offer-container">
+          <div class="offers">
+            <h3>Buscar invocadores LOL</h3>
+            <img
+              src="img/offer-lol.jpg"
+              alt="Imagen de lol"
+              class="img-lol-offer"
+            />
+            <p class="p-lol-offer">
+              Ofrecemos un servicio de busqueda de perfiles de League of legends
+              para saber las estadisticas generales de los invocadores en este
+              juego
+            </p>
+            <form action="buscar_invocador.html">
+              <button>Ir</button>
+            </form>
+          </div>
+
+          <div class="offers">
+            <h3>Buscar invocadores TFT</h3>
+            <img
+              src="img/offer-tft.jpg"
+              alt="Imagen de lol"
+              class="img-tft-offer"
+            />
+            <p class p-tft-offer>
+              Ofrecemos un servicio de busqueda de perfiles de TFT para saber
+              las estadisticas generales de los invocadores en este juego
+            </p>
+
+            <form action="buscar_invocador_tft.html">
+              <button>Ir</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!--Section four-->
+      <section id="differences">
+        <h2>¿Qué nos diferencia?</h2>
+        <p>
+          ¡La velocidad de carga de nuestra pagina! Con una carga de 3bits por
+          minuto logramos mostrarles la información que necesitan en un
+          aproximado de 3 a 4 días hábiles. (La paciencia es la madre de las
+          virtudes).
+        </p>
+        <img src="img/differences-emote.png" alt="Emote de Teemo" />
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>
+          &copy; SNFinder 2023 <br />
+          Página creada por
+          <a href="https://github.com/Villarruel-Thiago-Bautista"
+            >Villarruel Thiago Bautista
+            <img
+              class="logo-github"
+              src="img/logo-github.png"
+              alt="Logo github"
+          /></a>
+        </p>
+      </div>
+    </footer>
+    <script src="js/menu-responsive.js"></script>
+    <script src="js/dark_mode.js"></script>
+  </body>
+</html>

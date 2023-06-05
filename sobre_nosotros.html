@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="HandheldFriendly" content="true" />
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/sobre_nosotros.css" />
+    <link
+      rel="shortcut icon"
+      href="img/icono-pagina-1.ico"
+      type="image/x-icon"
+    />
+    <script
+      src="https://kit.fontawesome.com/1305786c57.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>SNFinder</title>
+  </head>
+  <body>
+    <!--Header-->
+    <header>
+      <div class="container">
+        <a href="index.html" class="logo">SNFINDER</a>
+        <nav>
+          <div class="menu-icon">
+            <i class="fa-solid fa-bars"></i>
+          </div>
+          <ul class="menu">
+            <li><a href="index.html">INICIO</a></li>
+            <li><a href="buscar_invocador.html">BUSCAR INVOCADOR</a></li>
+            <li><a href="buscar_invocador_tft.html">TFT</a></li>
+            <li><a href="sobre_nosotros.html">SOBRE NOSOTROS</a></li>
+            <div class="dark-mode">
+              <label for="toggle" id="label_toggle"
+                ><i class="fa-solid fa-lightbulb"></i
+              ></label>
+              <input type="checkbox" id="toggle" />
+            </div>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!--Main-->
+    <main>
+      <!--Section one-->
+      <section id="hero">
+        <h1>Conoce a los responsables de que esta página exista</h1>
+        <form action="#about-us">
+          <button>QUIERO SABER MAS</button>
+        </form>
+      </section>
+
+      <!--Section two-->
+      <section class="container-about-us" id="about-us">
+        <div class="container-thiago">
+          <h3>Villarruel Thiago Butista</h3>
+          <p>
+            Responsable de la estructura (HTML) y estilo (CSS) de la pagina web,
+            así como del diseño responsive. Responsable de la conexión a la API
+            de Riot Games y el dinamismo de la pagina buscar_invocador_tft.html.
+            Responsable del modo oscuro
+          </p>
+        </div>
+        <div class="container-julian">
+          <h3>Gonzalez Lopez Julian</h3>
+          <p>
+            Responsable de la conexión a la API de Riot Games y del dinamismo de
+            la pagina buscar_invocador.html. Responsable de la insercion
+            dinamica de los íconos de las ligas en cada cola del juego.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>
+          &copy; SNFinder 2023 <br />
+          Página creada por
+          <a href="https://github.com/Villarruel-Thiago-Bautista"
+            >Villarruel Thiago Bautista
+            <img
+              class="logo-github"
+              src="img/logo-github.png"
+              alt="Logo github"
+          /></a>
+        </p>
+      </div>
+    </footer>
+    <script src="js/menu-responsive.js"></script>
+    <script src="js/dark_mode.js"></script>
+  </body>
+</html>

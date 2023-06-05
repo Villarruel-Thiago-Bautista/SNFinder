@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="HandheldFriendly" content="true" />
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/buscar_invocador.css" />
+    <link
+      rel="shortcut icon"
+      href="img/icono-pagina-1.ico"
+      type="image/x-icon"
+    />
+    <script
+      src="https://kit.fontawesome.com/1305786c57.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>SNFinder</title>
+  </head>
+  <body>
+    <!--Header-->
+    <header>
+      <div class="container">
+        <a href="index.html" class="logo">SNFINDER</a>
+        <nav>
+          <div class="menu-icon">
+            <i class="fa-solid fa-bars"></i>
+          </div>
+          <ul class="menu">
+            <li><a href="index.html">INICIO</a></li>
+            <li><a href="buscar_invocador.html">BUSCAR INVOCADOR</a></li>
+            <li><a href="buscar_invocador_tft.html">TFT</a></li>
+            <li><a href="sobre_nosotros.html">SOBRE NOSOTROS</a></li>
+            <div class="dark-mode">
+              <label for="toggle" id="label_toggle"
+                ><i class="fa-solid fa-lightbulb"></i
+              ></label>
+              <input type="checkbox" id="toggle" />
+            </div>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!--Main-->
+    <main>
+      <!--Section one-->
+      <section id="hero">
+        <h1>
+          Busca estadisticas de jugadores <br />
+          de LOL de toda la región
+        </h1>
+        <form action="#summoner_input_holder">
+          <button>COMENZAR</button>
+        </form>
+      </section>
+
+      <section id="summoner_input_holder">
+        <h2>Dime tu nombre, Invocador</h2>
+        <div>
+          <input type="text" id="summoner_input" tabindex="1" />
+          <input
+            type="submit"
+            id="search-btn"
+            tabindex="2"
+            value="Buscar jugador"
+          />
+        </div>
+      </section>
+      <div id="summoner_display_main">
+        <div id="summoner_display">
+          <img
+            id="summoner_image"
+            src="img/amarillo.png"
+            alt="Imagen perfil de usuario"
+          />
+          <ul>
+            <li></li>
+            <li></li>
+          </ul>
+          <div id="ranks-container">
+            <div id="solo_q_rank">
+              <div class="info-rango-container">
+                <img src="" alt="" class="img-rank" />
+                <p></p>
+              </div>
+              <div class="info-partidas-container">
+                <p></p>
+                <p></p>
+              </div>
+            </div>
+            <div id="flex_rank">
+              <div class="info-rango-container">
+                <img src="" alt="" class="img-rank" />
+                <p></p>
+              </div>
+              <div class="info-partidas-container">
+                <p></p>
+                <p></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="summoner_display_history">
+          <table>
+            <thead>
+              <th>Campeón</th>
+              <th>K</th>
+              <th>D</th>
+              <th>A</th>
+              <th>Resultado</th>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="container">
+        <p>
+          &copy; SNFinder 2023 <br />
+          Página creada por
+          <a href="https://github.com/Villarruel-Thiago-Bautista"
+            >Villarruel Thiago Bautista
+            <img
+              class="logo-github"
+              src="img/logo-github.png"
+              alt="Logo github"
+          /></a>
+          y
+          <a href="https://github.com/JulianGonzalezLopez"
+            >Gonzalez Lopez Julián
+            <img
+              class="logo-github"
+              src="img/logo-github.png"
+              alt="Logo github"
+          /></a>
+        </p>
+      </div>
+    </footer>
+
+    <dialog id="modal">
+      <p id="texto-blitz">Ups! Prueba con otro nombre</p>
+      <img
+        src="/img/summonerNotFound.png"
+        alt="Imagen que aparece en caso de que no exista el invocador"
+        id="blitz"
+      />
+      <button id="btn-modal">Cerrar</button>
+    </dialog>
+
+    <script src="js/buscar_invocador.js"></script>
+    <script src="js/menu-responsive.js"></script>
+    <script src="js/dark_mode.js"></script>
+  </body>
+</html>

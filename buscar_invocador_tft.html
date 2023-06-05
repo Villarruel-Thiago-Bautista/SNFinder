@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="HandheldFriendly" content="true" />
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/buscar_invocador_tft.css" />
+    <link
+      rel="shortcut icon"
+      href="img/icono-pagina-1.ico"
+      type="image/x-icon"
+    />
+    <script
+      src="https://kit.fontawesome.com/1305786c57.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>SNFinder</title>
+  </head>
+  <body>
+    <!--Header-->
+    <header>
+      <div class="container">
+        <a href="index.html" class="logo">SNFINDER</a>
+        <nav>
+          <div class="menu-icon">
+            <i class="fa-solid fa-bars"></i>
+          </div>
+          <ul class="menu">
+            <li><a href="index.html">INICIO</a></li>
+            <li><a href="buscar_invocador.html">BUSCAR INVOCADOR</a></li>
+            <li><a href="buscar_invocador_tft.html">TFT</a></li>
+            <li><a href="sobre_nosotros.html">SOBRE NOSOTROS</a></li>
+            <div class="dark-mode">
+              <label for="toggle" id="label_toggle"
+                ><i class="fa-solid fa-lightbulb"></i
+              ></label>
+              <input type="checkbox" id="toggle" />
+            </div>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!--Main-->
+    <main>
+      <!--Section one-->
+      <section id="hero">
+        <h1>
+          Busca estadisticas de jugadores <br />
+          de TFT de toda la región
+        </h1>
+        <form action="#tabla">
+          <button>COMENZAR</button>
+        </form>
+      </section>
+
+      <section id="summoner_input_holder">
+        <h2>Dime tu nombre, Invocador</h2>
+        <form id="search-form">
+          <input type="text" id="summonerName" name="summonerName" />
+          <button type="submit" id="search_btn">Buscar jugador</button>
+        </form>
+      </section>
+      <section id="info-summoner-section">
+        <div id="icono-invocador" class="oculto">
+          <img id="icono-img" src="" alt="Icono de invocador" />
+        </div>
+        <div id="info-summoner"></div>
+      </section>
+      <section>
+        <div class="resultado-tabla" id="tabla">
+          <table id="tabla-resultados" class="oculto">
+            <thead>
+              <tr>
+                <th>Posición</th>
+                <th>Resultado</th>
+                <th>Jugadores eliminados</th>
+                <th>Rondas jugadas</th>
+              </tr>
+            </thead>
+            <tbody id="resultado-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="container">
+        <p>
+          &copy; SNFinder 2023 <br />
+          Página creada por
+          <a href="https://github.com/Villarruel-Thiago-Bautista"
+            >Villarruel Thiago Bautista
+            <img
+              class="logo-github"
+              src="img/logo-github.png"
+              alt="Logo github"
+          /></a>
+        </p>
+      </div>
+    </footer>
+
+    <dialog id="modal">
+      <p id="texto-blitz">Ups! Prueba con otro nombre</p>
+      <img
+        src="/img/summonerNotFound.png"
+        alt="Imagen que aparece en caso de que no exista el invocador"
+        id="blitz"
+      />
+      <button id="btn-modal">Cerrar</button>
+    </dialog>
+
+    <script src="js/menu-responsive.js"></script>
+    <script src="js/buscar_invocador_tft.js"></script>
+    <script src="js/dark_mode.js"></script>
+  </body>
+</html>

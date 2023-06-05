@@ -1,0 +1,538 @@
+/* IMPORTO FUENTE */
+
+@font-face {
+  font-family: friz-quadrata-regular;
+  src: url(../fonts/friz-quadrata-regular.ttf);
+}
+
+/* ESTILOS GENERALES BÁSICOS QUE SE APLICARÁN A CUALQUIER VERSIÓN */
+html {
+  scroll-behavior: smooth;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  font-family: friz-quadrata-regular;
+}
+
+.logo {
+  display: none;
+}
+
+h1 {
+  font-size: 3em;
+}
+h2 {
+  font-size: 2.5em;
+}
+h3 {
+  font-size: 2em;
+}
+p {
+  font-size: 1.2em;
+}
+
+hr {
+  visibility: hidden;
+}
+
+button {
+  font-size: 1.5em;
+  padding: 0.5em 1.3em;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 5px;
+  background-color: #f1e09d;
+  color: black;
+  box-shadow: 0px 0px 10px black;
+}
+button:hover {
+  background-color: #ba9b61;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 800px) {
+  /* ESTILOS MOBILE RESPONSIVE (FIRST MOBILE BUSCANDO NO HACER DRY CODE)*/
+
+  /* Header */
+
+  .dark-header ul li a {
+    color: white;
+  }
+
+  .dark {
+    background-color: #333;
+    color: white;
+    transition: all 1s ease;
+  }
+
+  #toggle {
+    display: none;
+  }
+
+  #label_toggle {
+    display: flex;
+    margin-left: 1em;
+    color: #9b9b9b;
+    cursor: pointer;
+    font-size: 2em;
+    margin-top: 0.188em;
+  }
+
+  .logo {
+    display: flex;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #f93f55;
+    text-decoration: none;
+    font-size: 1.5em;
+    margin-top: 1em;
+  }
+
+  header {
+    background-color: #eee;
+    padding: 10px;
+  }
+
+  .menu-icon {
+    font-size: 2em;
+    cursor: pointer;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-align: right;
+    margin-top: -1em;
+  }
+
+  .menu {
+    display: none;
+  }
+
+  .menu.show-menu {
+    display: flex;
+    flex-direction: column;
+    background-color: #eee;
+  }
+
+  .menu.show-menu li {
+    border-bottom: 1px solid #ccc;
+    list-style: none;
+  }
+
+  .menu.show-menu li:last-child {
+    border-bottom: none;
+  }
+
+  .menu.show-menu li a {
+    display: block;
+    padding: 1em;
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .menu.show-menu li a:hover {
+    background-color: #f93f55;
+    transition: all 0.1s ease;
+  }
+
+  /* Hero */
+
+  #hero {
+    background-image: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.5),
+        rgba(0, 0, 0, 0.5)
+      ),
+      url(../img/hero-tft.jpg);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 91.5vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    color: white;
+  }
+
+  /* Cuerpo */
+
+  .oculto {
+    display: none;
+  }
+
+  #info-summoner-section {
+    text-align: center;
+    margin-bottom: 1em;
+  }
+
+  #summoner_input_holder {
+    padding: 0 1em;
+  }
+
+  #summoner_input_holder h2 {
+    font-size: 1.5em; /* 24px */
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    text-align: center;
+  }
+
+  #summoner_input_holder input[type="text"] {
+    margin-bottom: 1em;
+    font-size: 1.5em; /* 24px */
+    padding: 0.5em;
+    margin-right: 0;
+    width: 100%;
+    border: none;
+    border-radius: 0.5em;
+    box-shadow: 0 0.25em 0.5em rgba(0, 0, 0, 0.2);
+  }
+
+  #summoner_input_holder button {
+    font-size: 1.5em; /* 24px */
+    padding: 0.5em;
+    width: 100%;
+    margin-top: 0.5em;
+    border: none;
+    border-radius: 0.5em;
+    background-color: #f93f55;
+    color: #fff;
+    box-shadow: 0 0.25em 0.5em rgba(0, 0, 0, 0.2);
+  }
+
+  #info-summoner {
+    display: block;
+    max-width: 100%;
+  }
+
+  #info-summoner {
+    margin-bottom: 1.5em;
+    padding: 5em;
+  }
+
+  #icono-invocador img {
+    display: flex;
+    margin: 0 auto;
+    margin-top: 1em;
+    border-radius: 50%;
+    box-shadow: 0 0 2em black;
+  }
+
+  .resultado-tabla {
+    padding: 1em;
+  }
+
+  table {
+    font-size: 1em;
+    margin-top: 1em;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  thead th {
+    font-size: 1em;
+    padding: 0.5em;
+    background-color: #f93f55;
+    color: #fff;
+  }
+
+  tbody td {
+    padding: 0.5em;
+    font-size: 1em;
+    border-bottom: 1px solid #000;
+  }
+
+  /*Footer*/
+  footer {
+    margin-top: 20em;
+    min-height: 5vh;
+    height: fit-content;
+    width: 100vw;
+    background-color: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    text-align: center;
+  }
+
+  footer a {
+    color: #f93f55;
+    text-decoration: none;
+  }
+
+  .logo-github {
+    width: 2em;
+    height: auto;
+    margin: 0 auto;
+  }
+}
+/* ESTILOS ESCRITORIO */
+
+@media screen and (min-width: 800px) {
+  /* Header */
+
+  .dark-header ul li a {
+    color: white;
+  }
+
+  .dark {
+    background-color: #333;
+    color: white;
+    transition: all 1s ease;
+  }
+
+  #toggle {
+    display: none;
+  }
+
+  #label_toggle {
+    display: flex;
+    margin-left: 1em;
+    color: #9b9b9b;
+    cursor: pointer;
+    font-size: 2em;
+    margin-top: 0.188em;
+  }
+  header {
+    background-color: #eee;
+    padding: 10px;
+  }
+
+  header a {
+    font-size: 16px;
+  }
+
+  .menu-icon {
+    display: none;
+  }
+
+  .logo {
+    display: flex;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #f93f55;
+    text-decoration: none;
+    font-size: 1.5em;
+  }
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: auto;
+    padding: 1rem;
+  }
+
+  .menu {
+    display: flex;
+    list-style: none;
+  }
+
+  .menu li {
+    margin: 1rem;
+  }
+
+  .menu li a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+  }
+
+  .menu li a:hover {
+    color: #f93f55;
+    border-bottom: #f93f55 solid 1px;
+  }
+
+  /* Hero */
+
+  #hero {
+    background-image: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.5),
+        rgba(0, 0, 0, 0.5)
+      ),
+      url(../img/hero-tft.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 91.5vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    color: white;
+  }
+
+  /*Cuerpo*/
+
+  .oculto {
+    display: none;
+  }
+
+  #info-summoner-section {
+    text-align: center;
+    margin-bottom: 1em;
+  }
+
+  #summoner_input_holder {
+    text-align: center;
+  }
+
+  #summoner_input_holder h2 {
+    margin-top: 3em;
+    font-size: 2.5em; /* 40px */
+    margin-bottom: 1em;
+    color: #000;
+  }
+
+  #summoner_input_holder input[type="text"] {
+    margin-bottom: 2em;
+    font-size: 2em; /* 32px */
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 0.5em;
+    box-shadow: 0 0.25em 0.5em rgba(0, 0, 0, 0.2);
+    margin-right: 1em;
+  }
+
+  #summoner_input_holder button {
+    margin-bottom: 1em;
+    font-size: 2em; /* 32px */
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 0.5em;
+    background-color: #f93f55;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0.25em 0.5em rgba(0, 0, 0, 0.2);
+  }
+
+  #summoner_input_holder button:hover {
+    background-color: #000;
+  }
+  /*TABLA*/
+
+  #info-summoner {
+    max-width: 37.5em;
+    margin: 0 auto;
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0;
+    grid-row-gap: 0;
+  }
+
+  #info-summoner {
+    grid-area: 1 / 1 / 2 / 2;
+
+    padding: 1.25em;
+    border-radius: 0.3125em;
+    display: inline-block;
+  }
+
+  #icono-invocador img {
+    width: 9.375em;
+    height: 9.375em;
+    border-radius: 50%;
+    margin-bottom: 1.25em;
+    box-shadow: 0 0 2em black;
+  }
+  #icono-img {
+    border-radius: 50%;
+  }
+
+  .resultado-tabla {
+    grid-area: 1 / 2 / 2 / 3;
+    padding: 0.625em;
+    border-radius: 0.3125em;
+    max-width: 37.5em;
+    margin: 0 auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+  }
+
+  thead th {
+    background-color: #f93f55;
+    color: #fff;
+    padding: 1rem;
+    text-align: left;
+  }
+
+  tbody td {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 500;
+    font-size: 1.1rem;
+    border-bottom: 1px solid #ddd;
+  }
+
+  /* Footer */
+
+  footer {
+    margin-top: 20em;
+    min-height: 5vh;
+    height: fit-content;
+    width: 100vw;
+    background-color: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    text-align: center;
+  }
+
+  footer a {
+    color: #f93f55;
+    text-decoration: none;
+  }
+
+  .logo-github {
+    width: 2em;
+    height: auto;
+    margin: 0 auto;
+  }
+}
+
+/*ESTILOS MODAL*/
+
+@keyframes showModal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animado {
+  animation: showModal 1s forwards ease;
+}
+
+#modal {
+  margin: auto;
+  padding: 2rem;
+  border-radius: 10%;
+  border: none;
+  text-align: center;
+  box-shadow: 10px 10px 53px 11px rgba(0, 0, 0, 0.75);
+}
+
+#modal p {
+  margin-bottom: 0.5rem;
+  font-weight: 1000;
+}
+
+#modal img {
+  border-radius: 100%;
+}
