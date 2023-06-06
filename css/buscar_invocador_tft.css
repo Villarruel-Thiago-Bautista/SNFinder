@@ -536,3 +536,10 @@ button:hover {
 #modal img {
   border-radius: 100%;
 }
+
+
+.img-rank {
+  visibility: visible !important;
+  width: 50px;
+  height: auto;
+}
