@@ -1,5 +1,5 @@
 /* INFO DE LA API */
-const API_KEY = "RGAPI-05aaa489-8d00-4686-a863-5fb0481533f1";
+const API_KEY = "RGAPI-558eb145-2c25-4886-b2f3-d12dabe8bb38";
 const BASE_URL = "https://la2.api.riotgames.com";
 const BASE_URL_MATCH = "https://americas.api.riotgames.com";
 
@@ -9,7 +9,6 @@ const summonerName = searchForm.getElementsByTagName("input")[0];
 const search_btn = searchForm.getElementsByTagName("button")[0];
 const modal = document.getElementById("modal");
 const btn_modal = document.getElementById("btn-modal");
-
 
 searchForm.addEventListener("submit", function (event) {
   event.preventDefault(); // QUE LA PAGINA NO SE RECARGUE AL ENVIAR EL FORMULARIO
@@ -138,7 +137,9 @@ function showSummonerData(data, rank) {
   infoSummonerDiv.innerHTML = `
     <h2>${data.name}</h2>
     <p>Nivel: ${data.summonerLevel}</p>
-    <img src="img/rangos/${rellenarImgRank(rank.tier,rank.rank)}" alt="${rank.tier} ${rank.rank}" title="${rank.tier} ${rank.rank}" class="img-rank"/>
+    <img src="img/rangos/${rellenarImgRank(rank.tier, rank.rank)}" alt="${
+    rank.tier
+  } ${rank.rank}" title="${rank.tier} ${rank.rank}" class="img-rank"/>
     <p>${rank.tier} ${rank.rank}</p>
     `;
 }
@@ -174,12 +175,12 @@ function showSummonerMatchData(placement, players_eliminated, last_round) {
 // Obtener el elemento input
 const summonerInput = document.getElementById("summoner-input");
 
-function mostrarNotFound(){
+function mostrarNotFound() {
   modal.showModal();
   modal.classList.toggle("animado");
-};
+}
 
-btn_modal.addEventListener("click",()=>{
+btn_modal.addEventListener("click", () => {
   modal.classList.toggle("animado");
   modal.close();
 });
@@ -191,67 +192,65 @@ function clearTable() {
 }
 //--------------------------------
 
-function rellenarImgRank(tier,rank){
+function rellenarImgRank(tier, rank) {
   //Objeto JSON que contiene los diferentes nombres de las imagenes por liga
   const ligas = {
-    "IRON": {
-      "IV": "Iron_4.jpg",
-      "III": "Iron_3.jpg",
-      "II": "Iron_2.jpg",
-      "I": "Iron_1.jpg",
+    IRON: {
+      IV: "Iron_4.jpg",
+      III: "Iron_3.jpg",
+      II: "Iron_2.jpg",
+      I: "Iron_1.jpg",
     },
-    "BRONZE": {
-      "IV": "Bronze_4.jpg",
-      "III": "Bronze_3.jpg",
-      "II": "Bronze_2.jpg",
-      "I": "Bronze_1.jpg",
+    BRONZE: {
+      IV: "Bronze_4.jpg",
+      III: "Bronze_3.jpg",
+      II: "Bronze_2.jpg",
+      I: "Bronze_1.jpg",
     },
-    "SILVER": {
-      "IV": "Silver_4.jpg",
-      "III": "Silver_3.jpg",
-      "II": "Silver_2.jpg",
-      "I": "Silver_1.jpg",
+    SILVER: {
+      IV: "Silver_4.jpg",
+      III: "Silver_3.jpg",
+      II: "Silver_2.jpg",
+      I: "Silver_1.jpg",
     },
-    "GOLD": {
-      "IV": "Gold_4.jpg",
-      "III": "Gold_3.jpg",
-      "II": "Gold_2.jpg",
-      "I": "Gold_1.jpg",
+    GOLD: {
+      IV: "Gold_4.jpg",
+      III: "Gold_3.jpg",
+      II: "Gold_2.jpg",
+      I: "Gold_1.jpg",
     },
-    "PLATINUM": {
-      "IV": "Platinum_4.jpg",
-      "III": "Platinum_3.jpg",
-      "II": "Platinum_2.jpg",
-      "I": "Platinum_1.jpg",
+    PLATINUM: {
+      IV: "Platinum_4.jpg",
+      III: "Platinum_3.jpg",
+      II: "Platinum_2.jpg",
+      I: "Platinum_1.jpg",
     },
-    "DIAMOND": {
-      "IV": "Diamond_4.jpg",
-      "III": "Diamond_3.jpg",
-      "II": "Diamond_2.jpg",
-      "I": "Diamond_1.jpg",
+    DIAMOND: {
+      IV: "Diamond_4.jpg",
+      III: "Diamond_3.jpg",
+      II: "Diamond_2.jpg",
+      I: "Diamond_1.jpg",
     },
-    "MASTER": {
-      "IV": "Master_4.jpg",
-      "III": "Master_3.jpg",
-      "II": "Master_2.jpg",
-      "I": "Master_1.jpg",
+    MASTER: {
+      IV: "Master_4.jpg",
+      III: "Master_3.jpg",
+      II: "Master_2.jpg",
+      I: "Master_1.jpg",
     },
-    "GRANDMASTER": {
-      "IV": "Grandmaster_4.jpg",
-      "III": "Grandmaster_3.jpg",
-      "II": "Grandmaster_2.jpg",
-      "I": "Grandmaster_1.jpg",
+    GRANDMASTER: {
+      IV: "Grandmaster_4.jpg",
+      III: "Grandmaster_3.jpg",
+      II: "Grandmaster_2.jpg",
+      I: "Grandmaster_1.jpg",
     },
-    "CHALLENGER": {
-      "IV": "Challenger_4.jpg",
-      "III": "Challenger_3.jpg",
-      "II": "Challenger_2.jpg",
-      "I": "Challenger_1.jpg",
-    }
-  }
+    CHALLENGER: {
+      IV: "Challenger_4.jpg",
+      III: "Challenger_3.jpg",
+      II: "Challenger_2.jpg",
+      I: "Challenger_1.jpg",
+    },
+  };
   return ligas[tier][rank];
 }
-
-
 
 //asdasd

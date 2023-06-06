@@ -62,39 +62,6 @@ button:hover {
     color: white;
   }
 
-  .dark {
-    background-color: #333;
-    color: white;
-    transition: all 1s ease;
-  }
-
-  #toggle {
-    display: none;
-  }
-
-  #label_toggle {
-    display: flex;
-    margin-left: 1em;
-    color: #9b9b9b;
-    cursor: pointer;
-    font-size: 2em;
-    margin-top: 0.188em;
-  }
-
-  header {
-    background-color: #eee;
-    padding: 10px;
-  }
-
-  .menu-icon {
-    font-size: 2em;
-    cursor: pointer;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    text-align: right;
-    margin-top: -1em;
-  }
-
   .logo {
     display: flex;
     font-weight: bold;
@@ -103,6 +70,22 @@ button:hover {
     text-decoration: none;
     font-size: 1.5em;
     margin-top: 1em;
+  }
+
+  header {
+    background-color: #eee;
+    padding: 10px;
+  }
+
+  /* Menu */
+
+  .menu-icon {
+    font-size: 2em;
+    cursor: pointer;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-align: right;
+    margin-top: -1em;
   }
 
   .menu {
@@ -137,6 +120,25 @@ button:hover {
     transition: all 0.1s ease;
   }
 
+  /* Cuerpo */
+
+  .dark {
+    background-color: #333;
+    color: white;
+  }
+
+  #toggle {
+    display: none;
+  }
+
+  #label_toggle {
+    display: flex;
+    margin-left: 1em;
+    color: #9b9b9b;
+    cursor: pointer;
+    font-size: 2em;
+    margin-top: 0.188em;
+  }
   /* Hero */
 
   #hero {
@@ -286,7 +288,6 @@ button:hover {
   .dark {
     background-color: #333;
     color: white;
-    transition: all 1s ease;
   }
 
   #toggle {
@@ -309,7 +310,6 @@ button:hover {
   .dark {
     background-color: #333;
     color: white;
-    transition: all 1s ease;
   }
 
   #toggle {

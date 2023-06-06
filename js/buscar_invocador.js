@@ -5,10 +5,9 @@ const $summoner_image = $summoner_display.getElementsByTagName("img")[0];
 const $match_history = document.getElementById("summoner_display_history");
 
 //Clave de la API
-const API_KEY = "RGAPI-05aaa489-8d00-4686-a863-5fb0481533f1";
+const API_KEY = "RGAPI-558eb145-2c25-4886-b2f3-d12dabe8bb38";
 
 changeDisplay($match_history, "hidden");
-
 
 // 🔽🔽🔽 EVENT LISTENERS 🔽🔽🔽
 
@@ -20,7 +19,6 @@ if (window.navigator.userAgent.match(/android|iphone|kindle|ipad/i)) {
   $name_input.addEventListener("keydown", async (event) => {
     if (event.isComposing || event.key === "Enter") {
       if ($name_input.value != "") {
-
         rellenarFigureLiga("RANKED_FLEX_SR");
         rellenarFigureLiga("RANKED_SOLO_5X5");
         $name_input.disabled = true;
@@ -56,14 +54,13 @@ $search_btn.addEventListener("click", async (event) => {
 //Elemento a escuchar
 const $btn_modal = document.getElementById("btn-modal");
 //Desaparecer el modal de not found
-$btn_modal.addEventListener("click",()=>{
+$btn_modal.addEventListener("click", () => {
   const $modal = document.getElementById("modal");
   $modal.classList.toggle("animado");
   $modal.close();
 });
 
 // 🔼🔼🔼 EVENT LISTENERS 🔼🔼🔼
-
 
 // 🔽🔽🔽 REQUESTS A LA API DE LOL 🔽🔽🔽
 
@@ -119,13 +116,8 @@ async function matchInfo(match_id) {
 
 // 🔼🔼🔼 REQUESTS A LA API DE LOL 🔼🔼🔼
 
-
-
-
-
 //rellena informacion sobre el invocador en el div con id summoner_display
 async function rellenarInfoSummoner(basicData) {
-
   //Pedido de informacion relacionada con las partidas clasificatorias del jugador
   let rankData = await summonerRank(basicData);
   //Se agrega el icono del jugador
@@ -137,14 +129,16 @@ async function rellenarInfoSummoner(basicData) {
   //Se inserta el nivel del jugador con la informacion recibida en basicData
   $summoner_data.children[1].textContent = `Level: ${basicData.summonerLevel}`;
   //Dinamicamente se carga el contenido de los elementos figure con el rango y tier del jugador
-  for(let i = 0; i < rankData.length; i++){
-    rellenarFigureLiga(rankData[i].queueType,rankData[i]);
+  for (let i = 0; i < rankData.length; i++) {
+    rellenarFigureLiga(rankData[i].queueType, rankData[i]);
   }
 }
 
 //Rellena informacion sobre las partidas dinamicamente en un table
 async function rellenarInfoPartidas(basicData) {
-  let tbody = $match_history.getElementsByTagName("table")[0].getElementsByTagName("tbody")[0];
+  let tbody = $match_history
+    .getElementsByTagName("table")[0]
+    .getElementsByTagName("tbody")[0];
   //Preparaciones iniciales al HTML
   borrarHistorial();
   borrarInfoSummoner();
@@ -177,7 +171,6 @@ async function rellenarInfoPartidas(basicData) {
   $name_input.disabled = false;
 }
 
-
 //retorna informacion sobre el jugador en cuestion en la partida dada por matchData
 function player_matchData(matchData, pid) {
   for (let i = 0; i < 10; i++) {
@@ -187,92 +180,116 @@ function player_matchData(matchData, pid) {
   }
 }
 
-
-function rellenarFigureLiga(queue,infoCola = {tier : "", rank: "", losses: "", wins: ""}){
+function rellenarFigureLiga(
+  queue,
+  infoCola = { tier: "", rank: "", losses: "", wins: "" }
+) {
   console.log(infoCola);
   //Objeto JSON que contiene los diferentes nombres de las imagenes por liga
   const ligas = {
-    "IRON": {
-      "IV": "Iron_4.jpg",
-      "III": "Iron_3.jpg",
-      "II": "Iron_2.jpg",
-      "I": "Iron_1.jpg",
+    IRON: {
+      IV: "Iron_4.jpg",
+      III: "Iron_3.jpg",
+      II: "Iron_2.jpg",
+      I: "Iron_1.jpg",
     },
-    "BRONZE": {
-      "IV": "Bronze_4.jpg",
-      "III": "Bronze_3.jpg",
-      "II": "Bronze_2.jpg",
-      "I": "Bronze_1.jpg",
+    BRONZE: {
+      IV: "Bronze_4.jpg",
+      III: "Bronze_3.jpg",
+      II: "Bronze_2.jpg",
+      I: "Bronze_1.jpg",
     },
-    "SILVER": {
-      "IV": "Silver_4.jpg",
-      "III": "Silver_3.jpg",
-      "II": "Silver_2.jpg",
-      "I": "Silver_1.jpg",
+    SILVER: {
+      IV: "Silver_4.jpg",
+      III: "Silver_3.jpg",
+      II: "Silver_2.jpg",
+      I: "Silver_1.jpg",
     },
-    "GOLD": {
-      "IV": "Gold_4.jpg",
-      "III": "Gold_3.jpg",
-      "II": "Gold_2.jpg",
-      "I": "Gold_1.jpg",
+    GOLD: {
+      IV: "Gold_4.jpg",
+      III: "Gold_3.jpg",
+      II: "Gold_2.jpg",
+      I: "Gold_1.jpg",
     },
-    "PLATINUM": {
-      "IV": "Platinum_4.jpg",
-      "III": "Platinum_3.jpg",
-      "II": "Platinum_2.jpg",
-      "I": "Platinum_1.jpg",
+    PLATINUM: {
+      IV: "Platinum_4.jpg",
+      III: "Platinum_3.jpg",
+      II: "Platinum_2.jpg",
+      I: "Platinum_1.jpg",
     },
-    "DIAMOND": {
-      "IV": "Diamond_4.jpg",
-      "III": "Diamond_3.jpg",
-      "II": "Diamond_2.jpg",
-      "I": "Diamond_1.jpg",
+    DIAMOND: {
+      IV: "Diamond_4.jpg",
+      III: "Diamond_3.jpg",
+      II: "Diamond_2.jpg",
+      I: "Diamond_1.jpg",
     },
-    "MASTER": {
-      "IV": "Master_4.jpg",
-      "III": "Master_3.jpg",
-      "II": "Master_2.jpg",
-      "I": "Master_1.jpg",
+    MASTER: {
+      IV: "Master_4.jpg",
+      III: "Master_3.jpg",
+      II: "Master_2.jpg",
+      I: "Master_1.jpg",
     },
-    "GRANDMASTER": {
-      "IV": "Grandmaster_4.jpg",
-      "III": "Grandmaster_3.jpg",
-      "II": "Grandmaster_2.jpg",
-      "I": "Grandmaster_1.jpg",
+    GRANDMASTER: {
+      IV: "Grandmaster_4.jpg",
+      III: "Grandmaster_3.jpg",
+      II: "Grandmaster_2.jpg",
+      I: "Grandmaster_1.jpg",
     },
-    "CHALLENGER": {
-      "IV": "Challenger_4.jpg",
-      "III": "Challenger_3.jpg",
-      "II": "Challenger_2.jpg",
-      "I": "Challenger_1.jpg",
+    CHALLENGER: {
+      IV: "Challenger_4.jpg",
+      III: "Challenger_3.jpg",
+      II: "Challenger_2.jpg",
+      I: "Challenger_1.jpg",
     },
-  }
+  };
   //tabla de conversion de info de respuesta
-  const hashTable = { RANKED_FLEX_SR: "Flex", RANKED_SOLO_5x5: "Solo/Duo" }; 
+  const hashTable = { RANKED_FLEX_SR: "Flex", RANKED_SOLO_5x5: "Solo/Duo" };
   //Variable usada para definir donde escribir
   let aux;
   //Eleccion del valor de aux
-  queue == "RANKED_FLEX_SR" ? aux = 1 : aux = 0;
+  queue == "RANKED_FLEX_SR" ? (aux = 1) : (aux = 0);
   //Se agrega contenido dinamicamente en el contenedor correspondiente dependiendo del valor de aux y si es un objeto NO vacio
-  if(infoCola.tier == ""){
-    document.getElementsByClassName("info-rango-container")[aux].getElementsByTagName("img")[0].src = "";
-    document.getElementsByClassName("info-rango-container")[aux].getElementsByTagName("p")[0].textContent = "";
-    document.getElementsByClassName("info-partidas-container")[aux].getElementsByTagName("p")[0].textContent = "";
-    document.getElementsByClassName("info-partidas-container")[aux].getElementsByTagName("p")[1].textContent = "";  
-  }
-  else{
-    document.getElementsByClassName("info-rango-container")[aux].getElementsByTagName("img")[0].src = `img/rangos/${ligas[infoCola.tier][infoCola.rank]}`;
-    document.getElementsByClassName("info-rango-container")[aux].getElementsByTagName("p")[0].textContent = `${infoCola.tier} ${infoCola.rank}`;
-    document.getElementsByClassName("info-partidas-container")[aux].getElementsByTagName("p")[0].textContent = `${infoCola.wins}W - ${infoCola.losses}L`;
-    document.getElementsByClassName("info-partidas-container")[aux].getElementsByTagName("p")[1].textContent = calcularWinratio(infoCola.wins,infoCola.losses);
-  
+  if (infoCola.tier == "") {
+    document
+      .getElementsByClassName("info-rango-container")
+      [aux].getElementsByTagName("img")[0].src = "";
+    document
+      .getElementsByClassName("info-rango-container")
+      [aux].getElementsByTagName("p")[0].textContent = "";
+    document
+      .getElementsByClassName("info-partidas-container")
+      [aux].getElementsByTagName("p")[0].textContent = "";
+    document
+      .getElementsByClassName("info-partidas-container")
+      [aux].getElementsByTagName("p")[1].textContent = "";
+  } else {
+    document
+      .getElementsByClassName("info-rango-container")
+      [aux].getElementsByTagName("img")[0].src = `img/rangos/${
+      ligas[infoCola.tier][infoCola.rank]
+    }`;
+    document
+      .getElementsByClassName("info-rango-container")
+      [aux].getElementsByTagName(
+        "p"
+      )[0].textContent = `${infoCola.tier} ${infoCola.rank}`;
+    document
+      .getElementsByClassName("info-partidas-container")
+      [aux].getElementsByTagName(
+        "p"
+      )[0].textContent = `${infoCola.wins}W - ${infoCola.losses}L`;
+    document
+      .getElementsByClassName("info-partidas-container")
+      [aux].getElementsByTagName("p")[1].textContent = calcularWinratio(
+      infoCola.wins,
+      infoCola.losses
+    );
   }
 }
 
-function calcularWinratio(wins,losses){
+function calcularWinratio(wins, losses) {
   return `Winrate ${Math.trunc((wins / (wins + losses)) * 100)}%`;
 }
-
 
 //Crea y retorna un elemento tr con la cantidad de sub-elementos td como informacion se necesite en la tabla
 function crearRegistro(infoPartida) {
@@ -280,15 +297,14 @@ function crearRegistro(infoPartida) {
 
   for (let i = 0; i < infoPartida.length; i++) {
     let td = document.createElement("td");
-    if(i == 0){
+    if (i == 0) {
       let imagen = document.createElement("img");
       imagen.src = `http://ddragon.leagueoflegends.com/cdn/13.10.1/img/champion/${infoPartida[0]}.png`;
       imagen.alt = `Imagenn del personaje ${infoPartida[0]}`;
       imagen.title = infoPartida[0];
       imagen.classList.add("imagen-campeon");
       td.appendChild(imagen);
-    }
-    else{
+    } else {
       tdText = document.createTextNode(infoPartida[i]);
       td.appendChild(tdText);
     }
@@ -318,9 +334,8 @@ function changeDisplay(elemento, visibilidad) {
   elemento.style.visibility = visibilidad;
 }
 
-
-function mostrarNotFound(){
+function mostrarNotFound() {
   const $modal = document.getElementById("modal");
   $modal.showModal();
   $modal.classList.toggle("animado");
-};
+}

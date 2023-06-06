@@ -65,7 +65,6 @@ button:hover {
   .dark {
     background-color: #333;
     color: white;
-    transition: all 1s ease;
   }
 
   #toggle {
@@ -282,7 +281,6 @@ button:hover {
   .dark {
     background-color: #333;
     color: white;
-    transition: all 1s ease;
   }
 
   #toggle {
@@ -536,7 +534,6 @@ button:hover {
 #modal img {
   border-radius: 100%;
 }
-
 
 .img-rank {
   visibility: visible !important;

@@ -2,7 +2,7 @@
 
 /* Document
    ========================================================================== */
-*{
+* {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -179,7 +179,8 @@ textarea {
  */
 
 button,
-input { /* 1 */
+input {
+  /* 1 */
   overflow: visible;
 }
 
@@ -189,7 +190,8 @@ input { /* 1 */
  */
 
 button,
-select { /* 1 */
+select {
+  /* 1 */
   text-transform: none;
 }
 
