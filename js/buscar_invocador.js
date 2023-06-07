@@ -12,6 +12,26 @@ changeDisplay($match_history, "hidden");
 // 🔽🔽🔽 EVENT LISTENERS 🔽🔽🔽
 
 //Elemento a escuchar
+const $form = document.getElementById("formulario");
+//Busqueda de invocador con region
+$form.addEventListener("submit", async (e)=>{
+  e.preventDefault();
+  console.log("aaaa");
+  if ($name_input.value != "") {
+    rellenarFigureLiga("RANKED_FLEX_SR");
+    rellenarFigureLiga("RANKED_SOLO_5X5");
+    $name_input.disabled = true;
+    $search_btn.disabled = true;
+
+    let basicData = await basicInfoSummoner();
+    rellenarInfoSummoner(basicData); 
+    rellenarInfoPartidas(basicData);
+}
+})
+
+
+
+//Elemento a escuchar
 const $name_input = document.getElementById("summoner_input");
 //Busqueda con enter solo en PC
 if (window.navigator.userAgent.match(/android|iphone|kindle|ipad/i)) {
@@ -79,8 +99,12 @@ async function genericRequest(endpoint) {
 
 //retorna informacion auxiliar y nivel de invocador
 async function basicInfoSummoner() {
+
+  const $region = $form.getElementsByTagName("select")[0];
+
+
   let res = await genericRequest(
-    `https://la2.api.riotgames.com/lol/summoner/v4/summoners/by-name/${$name_input.value}?api_key=${API_KEY}`
+    `https://${$region.value}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${$name_input.value}?api_key=${API_KEY}`
   );
   if (res != null) {
     return res;
@@ -93,23 +117,88 @@ async function basicInfoSummoner() {
 }
 //retorna el rango del invocador (nada, soloq, flex, soloq y flex)
 async function summonerRank(data) {
+
+  const $region = $form.getElementsByTagName("select")[0];
+
   let res = await genericRequest(
-    `https://la2.api.riotgames.com/lol/league/v4/entries/by-summoner/${data.id}?api_key=${API_KEY}`
+    `https://${$region.value}.api.riotgames.com/lol/league/v4/entries/by-summoner/${data.id}?api_key=${API_KEY}`
   );
   console.log(res);
   return res;
 }
 //retorna lista de ID para usar en la funcion matchInfo
 async function matchIds(puuid) {
+
+  const $region = $form.getElementsByTagName("select")[0];
+
+  let continente;
+
+  switch($region.value){
+    case "LA1":
+    case "LA2":
+    case "NA1":
+    case "BR1":
+      continente = "americas";
+      break;
+    case "OC1":
+      continente = "sea";
+      break;
+    case "SG2":
+    case "TH2":
+    case "TR1":
+    case "JP1":
+    case "VN1":
+    case "TW2":
+    case "PH2":
+    case "KR":
+      continente = "asia";
+      break;
+    case "EUN1":
+    case "EUW1":
+      continente = "europe";
+      break;
+  }
+
   let res = await genericRequest(
-    `https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=20&api_key=${API_KEY}`
+    `https://${continente}.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=20&api_key=${API_KEY}`
   );
   return res;
 }
 //retorna informacion de partida via id, se usa para mostrar modo de juego y ademas se usa en la funcion player_matchData
 async function matchInfo(match_id) {
+
+  const $region = $form.getElementsByTagName("select")[0];
+
+  let continente;
+
+  switch($region.value){
+    case "LA1":
+    case "LA2":
+    case "NA1":
+    case "BR1":
+      continente = "americas";
+      break;
+    case "OC1":
+      continente = "sea";
+      break;
+    case "SG2":
+    case "TH2":
+    case "TR1":
+    case "JP1":
+    case "VN1":
+    case "TW2":
+    case "PH2":
+    case "KR":
+      continente = "asia";
+      break;
+    case "EUN1":
+    case "EUW1":
+      continente = "europe";
+      break;
+  }
+
   let res = await genericRequest(
-    `https://americas.api.riotgames.com/lol/match/v5/matches/${match_id}?api_key=${API_KEY}`
+    `https://${continente}.api.riotgames.com/lol/match/v5/matches/${match_id}?api_key=${API_KEY}`
   );
   return res;
 }
