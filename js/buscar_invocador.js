@@ -5,7 +5,7 @@ const $summoner_image = $summoner_display.getElementsByTagName("img")[0];
 const $match_history = document.getElementById("summoner_display_history");
 
 //Clave de la API
-const API_KEY = "RGAPI-558eb145-2c25-4886-b2f3-d12dabe8bb38";
+const API_KEY = "RGAPI-e3c4659d-d1f1-4df1-af72-9e274b08f835";
 
 changeDisplay($match_history, "hidden");
 
@@ -252,10 +252,10 @@ function rellenarFigureLiga(
   if (infoCola.tier == "") {
     document
       .getElementsByClassName("info-rango-container")
-      [aux].getElementsByTagName("img")[0].src = "";
+      [aux].getElementsByTagName("img")[0].src = "img/rangos/Unranked.jpg";
     document
       .getElementsByClassName("info-rango-container")
-      [aux].getElementsByTagName("p")[0].textContent = "";
+      [aux].getElementsByTagName("p")[0].textContent = "Unranked";
     document
       .getElementsByClassName("info-partidas-container")
       [aux].getElementsByTagName("p")[0].textContent = "";
