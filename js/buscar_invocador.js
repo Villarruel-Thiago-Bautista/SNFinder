@@ -3,9 +3,10 @@ const $summoner_display = document.getElementById("summoner_display");
 const $summoner_data = $summoner_display.getElementsByTagName("ul")[0];
 const $summoner_image = $summoner_display.getElementsByTagName("img")[0];
 const $match_history = document.getElementById("summoner_display_history");
+const $search_btn = document.getElementById("search-btn");
 
 //Clave de la API
-const API_KEY = "RGAPI-e3c4659d-d1f1-4df1-af72-9e274b08f835";
+const API_KEY = "RGAPI-a7295710-6e94-48a8-8845-f706ced0d6dd";
 
 changeDisplay($match_history, "hidden");
 
@@ -16,7 +17,6 @@ const $form = document.getElementById("formulario");
 //Busqueda de invocador con region
 $form.addEventListener("submit", async (e)=>{
   e.preventDefault();
-  console.log("aaaa");
   if ($name_input.value != "") {
     rellenarFigureLiga("RANKED_FLEX_SR");
     rellenarFigureLiga("RANKED_SOLO_5X5");
@@ -29,47 +29,21 @@ $form.addEventListener("submit", async (e)=>{
 }
 })
 
-
-
 //Elemento a escuchar
 const $name_input = document.getElementById("summoner_input");
-//Busqueda con enter solo en PC
+//Busqueda con enter solo en pc ejecutando el submit del formulario
 if (window.navigator.userAgent.match(/android|iphone|kindle|ipad/i)) {
 } else {
   $name_input.addEventListener("keydown", async (event) => {
     if (event.isComposing || event.key === "Enter") {
       if ($name_input.value != "") {
-        rellenarFigureLiga("RANKED_FLEX_SR");
-        rellenarFigureLiga("RANKED_SOLO_5X5");
-        $name_input.disabled = true;
-        $search_btn.disabled = true;
-
-        let basicData = await basicInfoSummoner();
-        rellenarInfoSummoner(basicData);
-        rellenarInfoPartidas(basicData);
+        $form.dispatchEvent(new Event("submit"));
       }
     }
   });
 }
 
-//Elemento a escuchar
-const $search_btn = document.getElementById("search-btn");
-//Busqueda via click en boton
-$search_btn.addEventListener("click", async (event) => {
-  console.log(
-    "Boca yo te amo, siempre te sigo a todos lados, De corazón, pongan más huevos, Porque a boca lo queremos, Este amor que por vos siento, Boca es un sentimiento, De corazón, pongan más huevos, Porque a boca lo queremos, Ver campeón, y River Plate, Vos ya sabés, este año vas para la B, Y river plate, vos ya sabés, Que vos vas a correr, Y dale dale dale vo, Dale dale dale dale vo, Boca, vamo que ganamo, Boca yo te amo, siempre te sigo a todos lados, De corazón, pongan más huevos, Porque a boca lo queremos, Este amor que por vos siento, Boca es un sentimiento, De corazón, pongan más huevos, Porque a boca, lo queremos ver campeón, Y river plate, vos ya sabés, este año vas para la B, Y river plate, vos ya sabés, que vos vas a correr, Y dale, dale, dale vo, Dale, dale, dale, dale vo, Boca, vamo que ganamo"
-  );
-  if ($name_input.value != "") {
-    rellenarFigureLiga("RANKED_FLEX_SR");
-    rellenarFigureLiga("RANKED_SOLO_5X5");
-    $name_input.disabled = true;
-    $search_btn.disabled = true;
 
-    let basicData = await basicInfoSummoner();
-    rellenarInfoSummoner(basicData);
-    rellenarInfoPartidas(basicData);
-  }
-});
 
 //Elemento a escuchar
 const $btn_modal = document.getElementById("btn-modal");
@@ -244,13 +218,7 @@ async function rellenarInfoPartidas(basicData) {
       );
       let outcome = player_match_data.win ? "Victory" : "Defeat";
       tbody.appendChild(
-        crearRegistro([
-          player_match_data.championName,
-          player_match_data.kills,
-          player_match_data.deaths,
-          player_match_data.assists,
-          outcome,
-        ])
+        crearRegistro(match_data, player_match_data)
       );
     }
     //Vuelve a estar visible el historial, ya completo
@@ -381,24 +349,153 @@ function calcularWinratio(wins, losses) {
 }
 
 //Crea y retorna un elemento tr con la cantidad de sub-elementos td como informacion se necesite en la tabla
-function crearRegistro(infoPartida) {
-  let tr = document.createElement("tr");
+function crearRegistro(infoPartida,infoJugador) {
 
-  for (let i = 0; i < infoPartida.length; i++) {
-    let td = document.createElement("td");
-    if (i == 0) {
-      let imagen = document.createElement("img");
-      imagen.src = `http://ddragon.leagueoflegends.com/cdn/13.10.1/img/champion/${infoPartida[0]}.png`;
-      imagen.alt = `Imagenn del personaje ${infoPartida[0]}`;
-      imagen.title = infoPartida[0];
-      imagen.classList.add("imagen-campeon");
-      td.appendChild(imagen);
-    } else {
-      tdText = document.createTextNode(infoPartida[i]);
-      td.appendChild(tdText);
-    }
-    tr.appendChild(td);
-  }
+  const tablaHechizos = {
+  1: 'Cleanse',
+  3: 'Exhaust',
+  4: 'Flash',
+  6: 'Haste',
+  7: 'Heal',
+  11: 'Smite',
+  12: 'Teleport',
+  13: 'Clarity',
+  14: 'Ignite',
+  21: 'Barrier',
+  30: 'To the King!',
+  31: 'Poro Toss',
+  32: 'Mark',
+  33: 'Nexus Siege: Siege Weapon Slot',
+  34: 'Nexus Siege: Siege Weapon Slot',
+  35: 'Nexus Siege: Siege Weapon Slot',
+  36: 'Nexus Siege: Siege Weapon Slot',
+  39: 'Ultra (Rapidly Flung) Mark',
+  40: 'Ultra (Rapidly Flung) Mark',
+  41: 'Ultra (Rapidly Flung) Mark',
+  42: 'Ultra (Rapidly Flung) Mark',
+  43: 'Ultra (Rapidly Flung) Mark',
+  44: 'Ultra (Rapidly Flung) Mark',
+  45: 'Ultra (Rapidly Flung) Mark',
+  46: 'Ultra (Rapidly Flung) Mark',
+  47: 'Ultra (Rapidly Flung) Mark',
+  48: 'Ultra (Rapidly Flung) Mark',
+  49: 'Ultra (Rapidly Flung) Mark',
+  50: 'Ultra (Rapidly Flung) Mark',
+  51: 'Ultra (Rapidly Flung) Mark',
+  52: 'Ultra (Rapidly Flung) Mark',
+  53: 'Ultra (Rapidly Flung) Mark',
+  54: 'Ultra (Rapidly Flung) Mark',
+  55: 'Ultra (Rapidly Flung) Mark',
+  56: 'Ultra (Rapidly Flung) Mark',
+  57: 'Ultra (Rapidly Flung) Mark',
+  58: 'Ultra (Rapidly Flung) Mark',
+  59: 'Ultra (Rapidly Flung) Mark',
+  60: 'Ultra (Rapidly Flung) Mark',
+  61: 'Ultra (Rapidly Flung) Mark',
+  62: 'Ultra (Rapidly Flung) Mark',
+  63: 'Ultra (Rapidly Flung) Mark',
+  64: 'Ultra (Rapidly Flung) Mark',
+  65: 'Ultra (Rapidly Flung) Mark',
+  66: 'Ultra (Rapidly Flung) Mark',
+  67: 'Ultra (Rapidly Flung) Mark',
+  68: 'Ultra (Rapidly Flung) Mark',
+  69: 'Ultra (Rapidly Flung) Mark',
+  70: 'Ultra (Rapidly Flung) Mark',
+  71: 'Ultra (Rapidly Flung) Mark',
+  72: 'Ultra (Rapidly Flung) Mark',
+  73: 'Ultra (Rapidly Flung) Mark'
+  };
+
+
+
+  //crea contenedor del registro
+  let tr = document.createElement("tr");
+  //crea la columna de info general
+  let infoGeneral = document.createElement("td");
+  //crea elementos especificos que iran dentro de esta columna
+  let modoDeJuego = document.createElement("p");
+  modoDeJuego.textContent = infoPartida.info.gameMode;
+  let duracion = document.createElement("p");
+  duracion.textContent = Math.trunc((infoPartida.info.gameDuration / 60) * 100) / 100;
+  let resultado = document.createElement("p");
+  resultado.textContent = infoJugador.win ? "Victoria" : "Derrota";
+  //se insertan los elementos en la columna info general
+  infoGeneral.appendChild(modoDeJuego);
+  infoGeneral.appendChild(duracion);
+  infoGeneral.appendChild(document.createElement("hr"));
+  infoGeneral.appendChild(resultado);
+  //se inserta la columna
+  tr.appendChild(infoGeneral);
+  //crea la columna de infoPersonaje
+  let infoPersonaje = document.createElement("td");
+  //crea los elementos especificos que iran dentro de esta columna
+  let personaje = document.createElement("img");
+  personaje.src = `http://ddragon.leagueoflegends.com/cdn/13.10.1/img/champion/${infoJugador.championName}.png`;
+  personaje.alt = `Imagenn del personaje ${infoJugador.championName}`;
+  personaje.title = `Imagenn del personaje ${infoJugador.championName}`;
+  //personaje.classList.add("imagen-campeon");
+  let nivel = document.createElement("p");
+  nivel.textContent = infoJugador.champLevel;
+  personaje.appendChild(nivel);
+  let hechizo1 = document.createElement("img");
+  hechizo1.src = `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/spell/Summoner${tablaHechizos[infoJugador.summoner1Id]}.png`;
+  hechizo1.title = "hechizo1";
+  hechizo1.alt = "hechizo1";
+  let hechizo2 = document.createElement("img");
+  hechizo2.src =  `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/spell/Summoner${tablaHechizos[infoJugador.summoner2Id]}.png`;
+  hechizo2.title = "hechizo1";
+  hechizo2.alt = "hechizo1";
+  //se insertan los elementos en la columna info jugador
+  infoPersonaje.appendChild(personaje);
+  infoPersonaje.appendChild(hechizo1);
+  infoPersonaje.appendChild(hechizo2);
+  //crea la columna infoObjetos
+  let infoObjetos = document.createElement("td");
+  //crea los elementos que iran dentro de esta columna
+  let objeto0 = document.createElement("img");
+  objeto0.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item0}.png`;
+  objeto0.alt = "";
+  objeto0.title = "";
+  let objeto1 = document.createElement("img");
+  objeto1.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item1}.png`;
+  objeto1.alt = "";
+  objeto1.title = "";
+  let objeto2 = document.createElement("img");
+  objeto2.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item2}.png`;
+  objeto2.alt = "";
+  objeto2.title = "";
+  let objeto3 = document.createElement("img");
+  objeto3.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item3}.png`;
+  objeto3.alt = "";
+  objeto3.title = "";
+  let objeto4 = document.createElement("img");
+  objeto4.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item4}.png`;
+  objeto4.alt = "";
+  objeto4.title = "";
+  let objeto5 = document.createElement("img");
+  objeto5.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item5}.png`;
+  objeto5.alt = "";
+  objeto5.title = "";
+  let objeto6 = document.createElement("img");
+  objeto6.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item6}.png`;
+  objeto6.alt = "";
+  objeto6.title = "";
+
+  infoObjetos.appendChild(objeto0);
+  infoObjetos.appendChild(objeto1);
+  infoObjetos.appendChild(objeto2);
+  infoObjetos.appendChild(objeto3);
+  infoObjetos.appendChild(objeto4);
+  infoObjetos.appendChild(objeto5);
+  infoObjetos.appendChild(objeto6);
+  /*
+
+  infoObjetos.appendChild(objeto1);
+
+  */
+  tr.appendChild(infoGeneral);
+  tr.appendChild(infoPersonaje);
+  tr.appendChild(infoObjetos);
 
   return tr;
 }

@@ -585,7 +585,7 @@ button:hover {
 #solo_q_rank,
 #flex_rank {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
