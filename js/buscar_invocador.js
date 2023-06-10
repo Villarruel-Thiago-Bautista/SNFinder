@@ -6,7 +6,7 @@ const $match_history = document.getElementById("summoner_display_history");
 const $search_btn = document.getElementById("search-btn");
 
 //Clave de la API
-const API_KEY = "RGAPI-a7295710-6e94-48a8-8845-f706ced0d6dd";
+const API_KEY = "RGAPI-ed0b499d-deff-4193-81a0-1c54b0b63216";
 
 changeDisplay($match_history, "hidden");
 
@@ -199,9 +199,6 @@ async function rellenarInfoSummoner(basicData) {
 
 //Rellena informacion sobre las partidas dinamicamente en un table
 async function rellenarInfoPartidas(basicData) {
-  let tbody = $match_history
-    .getElementsByTagName("table")[0]
-    .getElementsByTagName("tbody")[0];
   //Preparaciones iniciales al HTML
   borrarHistorial();
   borrarInfoSummoner();
@@ -217,7 +214,7 @@ async function rellenarInfoPartidas(basicData) {
         basicData.puuid
       );
       let outcome = player_match_data.win ? "Victory" : "Defeat";
-      tbody.appendChild(
+      $match_history.appendChild(
         crearRegistro(match_data, player_match_data)
       );
     }
@@ -309,10 +306,10 @@ function rellenarFigureLiga(
   if (infoCola.tier == "") {
     document
       .getElementsByClassName("info-rango-container")
-      [aux].getElementsByTagName("img")[0].src = "img/rangos/Unranked.jpg";
+      [aux].getElementsByTagName("img")[0].src = "";
     document
       .getElementsByClassName("info-rango-container")
-      [aux].getElementsByTagName("p")[0].textContent = "Unranked";
+      [aux].getElementsByTagName("p")[0].textContent = "";
     document
       .getElementsByClassName("info-partidas-container")
       [aux].getElementsByTagName("p")[0].textContent = "";
@@ -409,34 +406,49 @@ function crearRegistro(infoPartida,infoJugador) {
 
 
   //crea contenedor del registro
-  let tr = document.createElement("tr");
+  let frag = document.createElement("div");
+  frag.classList.add("registro-partida");
   //crea la columna de info general
-  let infoGeneral = document.createElement("td");
+  let infoGeneral = document.createElement("div");
+  infoGeneral.classList.add("registro-partida-info-general");
   //crea elementos especificos que iran dentro de esta columna
   let modoDeJuego = document.createElement("p");
   modoDeJuego.textContent = infoPartida.info.gameMode;
   let duracion = document.createElement("p");
-  duracion.textContent = Math.trunc((infoPartida.info.gameDuration / 60) * 100) / 100;
+  duracion.textContent = `Duración: ${Math.trunc((infoPartida.info.gameDuration / 60) * 100) / 100}`;
   let resultado = document.createElement("p");
   resultado.textContent = infoJugador.win ? "Victoria" : "Derrota";
   //se insertan los elementos en la columna info general
   infoGeneral.appendChild(modoDeJuego);
   infoGeneral.appendChild(duracion);
-  infoGeneral.appendChild(document.createElement("hr"));
   infoGeneral.appendChild(resultado);
   //se inserta la columna
-  tr.appendChild(infoGeneral);
+  frag.appendChild(infoGeneral);
   //crea la columna de infoPersonaje
-  let infoPersonaje = document.createElement("td");
+  let infoPersonaje = document.createElement("div");
+  infoPersonaje.classList.add("registro-partida-info-personaje");
+  infoPersonaje.classList.add("info-personaje");
   //crea los elementos especificos que iran dentro de esta columna
+  let divPersonaje = document.createElement("div");
+  divPersonaje.classList.add("texto-en-imagen");
   let personaje = document.createElement("img");
+  personaje.classList.add("info-personaje-personaje");
   personaje.src = `http://ddragon.leagueoflegends.com/cdn/13.10.1/img/champion/${infoJugador.championName}.png`;
   personaje.alt = `Imagenn del personaje ${infoJugador.championName}`;
   personaje.title = `Imagenn del personaje ${infoJugador.championName}`;
-  //personaje.classList.add("imagen-campeon");
+  personaje.classList.add("imagen-campeon");
   let nivel = document.createElement("p");
-  nivel.textContent = infoJugador.champLevel;
-  personaje.appendChild(nivel);
+  nivel.classList.add("nivel-personaje");
+  if(infoJugador.champLevel > 10){
+    nivel.textContent = ` ${infoJugador.champLevel}`;
+  }
+  else{
+    nivel.textContent = infoJugador.champLevel;
+  }
+  divPersonaje.appendChild(personaje);
+  divPersonaje.appendChild(nivel);
+  let contenedorHechizos = document.createElement("div");
+  contenedorHechizos.classList.add("info-personaje-hechizos");
   let hechizo1 = document.createElement("img");
   hechizo1.src = `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/spell/Summoner${tablaHechizos[infoJugador.summoner1Id]}.png`;
   hechizo1.title = "hechizo1";
@@ -445,65 +457,89 @@ function crearRegistro(infoPartida,infoJugador) {
   hechizo2.src =  `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/spell/Summoner${tablaHechizos[infoJugador.summoner2Id]}.png`;
   hechizo2.title = "hechizo1";
   hechizo2.alt = "hechizo1";
-  //se insertan los elementos en la columna info jugador
-  infoPersonaje.appendChild(personaje);
-  infoPersonaje.appendChild(hechizo1);
-  infoPersonaje.appendChild(hechizo2);
-  //crea la columna infoObjetos
-  let infoObjetos = document.createElement("td");
+  contenedorHechizos.appendChild(hechizo1);
+  contenedorHechizos.appendChild(hechizo2);
+  //se crea div para contener los objetos usados por el jugador en esa partida
+  let contenedorObjetos = document.createElement("div");
+  contenedorObjetos.classList.add("info-personaje-items");
   //crea los elementos que iran dentro de esta columna
   let objeto0 = document.createElement("img");
   objeto0.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item0}.png`;
   objeto0.alt = "";
   objeto0.title = "";
+  objeto0.classList.add("item0");
   let objeto1 = document.createElement("img");
   objeto1.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item1}.png`;
   objeto1.alt = "";
   objeto1.title = "";
+  objeto1.classList.add("item1");
   let objeto2 = document.createElement("img");
   objeto2.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item2}.png`;
   objeto2.alt = "";
   objeto2.title = "";
+  objeto2.classList.add("item2");
   let objeto3 = document.createElement("img");
   objeto3.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item3}.png`;
   objeto3.alt = "";
   objeto3.title = "";
+  objeto3.classList.add("item3");
   let objeto4 = document.createElement("img");
   objeto4.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item4}.png`;
   objeto4.alt = "";
   objeto4.title = "";
+  objeto4.classList.add("item4");
   let objeto5 = document.createElement("img");
   objeto5.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item5}.png`;
   objeto5.alt = "";
   objeto5.title = "";
-  let objeto6 = document.createElement("img");
-  objeto6.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item6}.png`;
-  objeto6.alt = "";
-  objeto6.title = "";
+  objeto5.classList.add("item5");
 
-  infoObjetos.appendChild(objeto0);
-  infoObjetos.appendChild(objeto1);
-  infoObjetos.appendChild(objeto2);
-  infoObjetos.appendChild(objeto3);
-  infoObjetos.appendChild(objeto4);
-  infoObjetos.appendChild(objeto5);
-  infoObjetos.appendChild(objeto6);
-  /*
+  contenedorObjetos.appendChild(objeto0);
+  contenedorObjetos.appendChild(objeto1);
+  contenedorObjetos.appendChild(objeto2);
+  contenedorObjetos.appendChild(objeto3);
+  contenedorObjetos.appendChild(objeto4);
+  contenedorObjetos.appendChild(objeto5);
 
-  infoObjetos.appendChild(objeto1);
+  
+  let ward = document.createElement("img");
+  ward.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item6}.png`;
+  ward.alt = "";
+  ward.title = "";
+  ward.classList.add("info-personaje-ward");
 
-  */
-  tr.appendChild(infoGeneral);
-  tr.appendChild(infoPersonaje);
-  tr.appendChild(infoObjetos);
+  infoPersonaje.appendChild(divPersonaje);
+  infoPersonaje.appendChild(contenedorHechizos);
+  infoPersonaje.appendChild(contenedorObjetos);
+  infoPersonaje.appendChild(ward);
 
-  return tr;
+  frag.appendChild(infoPersonaje);
+
+  //se cra columna resultados partida
+  let infoResultados = document.createElement("div");
+  infoResultados.classList.add("registro-partida-info-resultados");
+  //se crean los elementos que iran dentro del mismo
+  let k = infoJugador.kills;
+  let d = infoJugador.deaths;
+  let a = infoJugador.assists;
+  let kda = document.createElement("p");
+  kda.textContent = `${k}/${d}/${a}`;
+  let cs = document.createElement("p");
+  cs.textContent = `Cs: ${infoJugador.totalMinionsKilled}`;
+  let participacion = document.createElement("p");
+  console.log(infoJugador.killParticipation);
+  participacion.textContent = `Participación: ${infoJugador.killParticipation}`;
+  infoResultados.appendChild(kda);
+  infoResultados.appendChild(cs);
+  infoResultados.appendChild(participacion);
+
+  frag.appendChild(infoResultados);
+  
+  return frag;
 }
 
 function borrarHistorial() {
-  $match_history
-    .getElementsByTagName("table")[0]
-    .getElementsByTagName("tbody")[0].innerHTML = "";
+  $match_history.innerHTML = "";
 }
 
 function borrarInfoSummoner() {
@@ -511,9 +547,7 @@ function borrarInfoSummoner() {
   $summoner_data.children[0].textContent = "";
   $summoner_data.children[1].textContent = "";
 
-  $match_history
-    .getElementsByTagName("table")[0]
-    .getElementsByTagName("tbody")[0].innerHTML = "";
+  $match_history.innerHTML = "";
 }
 
 function changeDisplay(elemento, visibilidad) {
