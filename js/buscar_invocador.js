@@ -6,7 +6,7 @@ const $match_history = document.getElementById("summoner_display_history");
 const $search_btn = document.getElementById("search-btn");
 
 //Clave de la API
-const API_KEY = "RGAPI-ed0b499d-deff-4193-81a0-1c54b0b63216";
+const API_KEY = "RGAPI-35eb1553-8524-4282-8546-0e42cfd98eae";
 
 changeDisplay($match_history, "hidden");
 
@@ -467,32 +467,38 @@ function crearRegistro(infoPartida,infoJugador) {
   objeto0.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item0}.png`;
   objeto0.alt = "";
   objeto0.title = "";
+  objeto0.classList.add("img-info-personaje");
   objeto0.classList.add("item0");
   let objeto1 = document.createElement("img");
   objeto1.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item1}.png`;
   objeto1.alt = "";
   objeto1.title = "";
   objeto1.classList.add("item1");
+  objeto1.classList.add("img-info-personaje");
   let objeto2 = document.createElement("img");
   objeto2.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item2}.png`;
   objeto2.alt = "";
   objeto2.title = "";
   objeto2.classList.add("item2");
+  objeto2.classList.add("img-info-personaje");
   let objeto3 = document.createElement("img");
   objeto3.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item3}.png`;
   objeto3.alt = "";
   objeto3.title = "";
   objeto3.classList.add("item3");
+  objeto3.classList.add("img-info-personaje");
   let objeto4 = document.createElement("img");
   objeto4.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item4}.png`;
   objeto4.alt = "";
   objeto4.title = "";
   objeto4.classList.add("item4");
+  objeto4.classList.add("img-info-personaje");
   let objeto5 = document.createElement("img");
   objeto5.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item5}.png`;
   objeto5.alt = "";
   objeto5.title = "";
   objeto5.classList.add("item5");
+  objeto5.classList.add("img-info-personaje");
 
   contenedorObjetos.appendChild(objeto0);
   contenedorObjetos.appendChild(objeto1);
@@ -506,12 +512,23 @@ function crearRegistro(infoPartida,infoJugador) {
   ward.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item6}.png`;
   ward.alt = "";
   ward.title = "";
+  ward.classList.add("img-info-personaje");
   ward.classList.add("info-personaje-ward");
 
   infoPersonaje.appendChild(divPersonaje);
   infoPersonaje.appendChild(contenedorHechizos);
   infoPersonaje.appendChild(contenedorObjetos);
   infoPersonaje.appendChild(ward);
+
+  let imagenesACambiar = document.getElementsByClassName("img-info-personaje");
+
+
+  for(let i = 0; i < imagenesACambiar.length; i++){
+    imagenesACambiar[i].addEventListener("error",()=>{
+      element.src = "img/noitem.png";
+     });
+  }
+
 
   frag.appendChild(infoPersonaje);
 
@@ -523,18 +540,27 @@ function crearRegistro(infoPartida,infoJugador) {
   let d = infoJugador.deaths;
   let a = infoJugador.assists;
   let kda = document.createElement("p");
-  kda.textContent = `${k}/${d}/${a}`;
+  kda.textContent = `KDA: ${k}/${d}/${a}`;
   let cs = document.createElement("p");
-  cs.textContent = `Cs: ${infoJugador.totalMinionsKilled}`;
-  let participacion = document.createElement("p");
-  console.log(infoJugador.killParticipation);
-  participacion.textContent = `Participación: ${infoJugador.killParticipation}`;
+  let porcentajeParticipacionFarm = porcentajeFarmeo(infoPartida,infoJugador);
+  cs.textContent = ` Cs: ${infoJugador.totalMinionsKilled + infoJugador.neutralMinionsKilled} (${porcentajeParticipacionFarm}%) `;
+  let wardsPuestos = document.createElement("p");
+  let porcentajeParticionWards = porcentajeWardeo(infoPartida,infoJugador);
+  
+  if(porcentajeParticionWards == "0"){
+    wardsPuestos.textContent = `Wards: ---`;
+  }
+  else{
+    wardsPuestos.textContent = `Wards: ${infoJugador.wardsPlaced} (${porcentajeParticionWards}%)`;
+  }
+
   infoResultados.appendChild(kda);
   infoResultados.appendChild(cs);
-  infoResultados.appendChild(participacion);
+  infoResultados.appendChild(wardsPuestos);
 
   frag.appendChild(infoResultados);
   
+
   return frag;
 }
 
@@ -558,4 +584,41 @@ function mostrarNotFound() {
   const $modal = document.getElementById("modal");
   $modal.showModal();
   $modal.classList.toggle("animado");
+}
+
+
+function porcentajeWardeo(infoPartida,infoJugador){
+  let total = 0;
+  for(let i = 0; i < 10; i++){
+    if(infoPartida.info.participants[i].win == infoJugador.win){
+      total += infoPartida.info.participants[i].wardsPlaced;
+    }
+  }
+  let porcentaje = Math.trunc((infoJugador.wardsPlaced * 100 / total) * 100) / 100;
+  
+  if(Number.isNaN(porcentaje) == false){
+    return porcentaje;
+  }
+  else{
+    return "0";
+  }
+}
+
+
+function porcentajeFarmeo(infoPartida,infoJugador){
+  let total = 0;
+  for(let i = 0; i < 10; i++){
+    if(infoPartida.info.participants[i].win == infoJugador.win){
+      total += infoPartida.info.participants[i].totalMinionsKilled + infoPartida.info.participants[i].neutralMinionsKilled;
+    }
+  }
+  let porcentaje = Math.trunc((infoJugador.totalMinionsKilled + infoJugador.neutralMinionsKilled * 100 / total) * 100) / 100;
+  
+  if(Number.isNaN(porcentaje) == false){
+    return porcentaje;
+  }
+  else{
+    return "0";
+  }
+
 }
