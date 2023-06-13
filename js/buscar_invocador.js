@@ -6,7 +6,7 @@ const $match_history = document.getElementById("summoner_display_history");
 const $search_btn = document.getElementById("search-btn");
 
 //Clave de la API
-const API_KEY = "RGAPI-35eb1553-8524-4282-8546-0e42cfd98eae";
+const API_KEY = "RGAPI-1cd95c15-24b5-4cc0-bee0-5692b6238abd";
 
 changeDisplay($match_history, "hidden");
 
@@ -102,9 +102,13 @@ async function summonerRank(data) {
 }
 //retorna lista de ID para usar en la funcion matchInfo
 async function matchIds(puuid) {
+/*
+  RUSIA NO ANDA TAMPOCO EN OP GG
+
+*/
 
   const $region = $form.getElementsByTagName("select")[0];
-
+  console.log($region.value);
   let continente;
 
   switch($region.value){
@@ -125,6 +129,7 @@ async function matchIds(puuid) {
     case "TW2":
     case "PH2":
     case "KR":
+    case "RU":
       continente = "asia";
       break;
     case "EUN1":
@@ -132,10 +137,11 @@ async function matchIds(puuid) {
       continente = "europe";
       break;
   }
-
+  console.log(continente);
   let res = await genericRequest(
     `https://${continente}.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=20&api_key=${API_KEY}`
   );
+  console.log(res);
   return res;
 }
 //retorna informacion de partida via id, se usa para mostrar modo de juego y ademas se usa en la funcion player_matchData
@@ -213,9 +219,9 @@ async function rellenarInfoPartidas(basicData) {
         match_data,
         basicData.puuid
       );
-      let outcome = player_match_data.win ? "Victory" : "Defeat";
+      console.log(match_data, player_match_data);
       $match_history.appendChild(
-        crearRegistro(match_data, player_match_data)
+        await crearRegistro(match_data, player_match_data)
       );
     }
     //Vuelve a estar visible el historial, ya completo
@@ -227,10 +233,16 @@ async function rellenarInfoPartidas(basicData) {
 
 //retorna informacion sobre el jugador en cuestion en la partida dada por matchData
 function player_matchData(matchData, pid) {
-  for (let i = 0; i < 10; i++) {
-    if (matchData.info.participants[i].puuid == pid) {
-      return matchData.info.participants[i];
+  try{
+    for (let i = 0; i < 10; i++) {
+      if (matchData.info.participants[i].puuid == pid) {
+        return matchData.info.participants[i];
+      }
     }
+  }
+  catch{
+    $search_btn.disabled = false;
+    $name_input.disabled = false;
   }
 }
 
@@ -346,7 +358,7 @@ function calcularWinratio(wins, losses) {
 }
 
 //Crea y retorna un elemento tr con la cantidad de sub-elementos td como informacion se necesite en la tabla
-function crearRegistro(infoPartida,infoJugador) {
+async function crearRegistro(infoPartida,infoJugador) {
 
   const tablaHechizos = {
   1: 'Cleanse',
@@ -356,12 +368,12 @@ function crearRegistro(infoPartida,infoJugador) {
   7: 'Heal',
   11: 'Smite',
   12: 'Teleport',
-  13: 'Clarity',
+  13: 'Mana',
   14: 'Ignite',
   21: 'Barrier',
   30: 'To the King!',
   31: 'Poro Toss',
-  32: 'Mark',
+  32: 'SnowBall',
   33: 'Nexus Siege: Siege Weapon Slot',
   34: 'Nexus Siege: Siege Weapon Slot',
   35: 'Nexus Siege: Siege Weapon Slot',
@@ -451,12 +463,12 @@ function crearRegistro(infoPartida,infoJugador) {
   contenedorHechizos.classList.add("info-personaje-hechizos");
   let hechizo1 = document.createElement("img");
   hechizo1.src = `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/spell/Summoner${tablaHechizos[infoJugador.summoner1Id]}.png`;
-  hechizo1.title = "hechizo1";
-  hechizo1.alt = "hechizo1";
+  hechizo1.title = `Summoner${tablaHechizos[infoJugador.summoner1Id]}`;
+  hechizo1.alt = `Summoner${tablaHechizos[infoJugador.summoner1Id]}`;
   let hechizo2 = document.createElement("img");
   hechizo2.src =  `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/spell/Summoner${tablaHechizos[infoJugador.summoner2Id]}.png`;
-  hechizo2.title = "hechizo1";
-  hechizo2.alt = "hechizo1";
+  hechizo2.title = `Summoner${tablaHechizos[infoJugador.summoner2Id]}`;
+  hechizo2.alt =`Summoner${tablaHechizos[infoJugador.summoner2Id]}`;
   contenedorHechizos.appendChild(hechizo1);
   contenedorHechizos.appendChild(hechizo2);
   //se crea div para contener los objetos usados por el jugador en esa partida
@@ -464,37 +476,37 @@ function crearRegistro(infoPartida,infoJugador) {
   contenedorObjetos.classList.add("info-personaje-items");
   //crea los elementos que iran dentro de esta columna
   let objeto0 = document.createElement("img");
-  objeto0.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item0}.png`;
+  objeto0.src = await verificarImagen(`http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item0}.png`);;
   objeto0.alt = "";
   objeto0.title = "";
   objeto0.classList.add("img-info-personaje");
   objeto0.classList.add("item0");
   let objeto1 = document.createElement("img");
-  objeto1.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item1}.png`;
+  objeto1.src = await verificarImagen(`http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item1}.png`);
   objeto1.alt = "";
   objeto1.title = "";
   objeto1.classList.add("item1");
   objeto1.classList.add("img-info-personaje");
   let objeto2 = document.createElement("img");
-  objeto2.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item2}.png`;
+  objeto2.src = await verificarImagen(`http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item2}.png`);
   objeto2.alt = "";
   objeto2.title = "";
   objeto2.classList.add("item2");
   objeto2.classList.add("img-info-personaje");
   let objeto3 = document.createElement("img");
-  objeto3.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item3}.png`;
+  objeto3.src = await verificarImagen(`http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item3}.png`);
   objeto3.alt = "";
   objeto3.title = "";
   objeto3.classList.add("item3");
   objeto3.classList.add("img-info-personaje");
   let objeto4 = document.createElement("img");
-  objeto4.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item4}.png`;
+  objeto4.src = await verificarImagen(`http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item4}.png`);
   objeto4.alt = "";
   objeto4.title = "";
   objeto4.classList.add("item4");
   objeto4.classList.add("img-info-personaje");
   let objeto5 = document.createElement("img");
-  objeto5.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item5}.png`;
+  objeto5.src = await verificarImagen(`http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item5}.png`);
   objeto5.alt = "";
   objeto5.title = "";
   objeto5.classList.add("item5");
@@ -509,7 +521,7 @@ function crearRegistro(infoPartida,infoJugador) {
 
   
   let ward = document.createElement("img");
-  ward.src = `http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item6}.png`;
+  ward.src = await verificarImagen(`http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item6}.png`);
   ward.alt = "";
   ward.title = "";
   ward.classList.add("img-info-personaje");
@@ -519,16 +531,6 @@ function crearRegistro(infoPartida,infoJugador) {
   infoPersonaje.appendChild(contenedorHechizos);
   infoPersonaje.appendChild(contenedorObjetos);
   infoPersonaje.appendChild(ward);
-
-  let imagenesACambiar = document.getElementsByClassName("img-info-personaje");
-
-
-  for(let i = 0; i < imagenesACambiar.length; i++){
-    imagenesACambiar[i].addEventListener("error",()=>{
-      element.src = "img/noitem.png";
-     });
-  }
-
 
   frag.appendChild(infoPersonaje);
 
@@ -621,4 +623,16 @@ function porcentajeFarmeo(infoPartida,infoJugador){
     return "0";
   }
 
+}
+
+function verificarImagen(url) {
+  return fetch(url)
+    .then(response => {
+      if (response.status === 200) {
+        return url; // La imagen está disponible
+      } else {
+        return Promise.reject(); // Rechazar la promesa para manejar el caso de error
+      }
+    })
+    .catch(() => "img/noitem.png"); // Error al acceder a la URL de la imagen
 }
