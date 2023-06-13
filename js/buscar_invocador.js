@@ -445,7 +445,7 @@ async function crearRegistro(infoPartida,infoJugador) {
   divPersonaje.classList.add("texto-en-imagen");
   let personaje = document.createElement("img");
   personaje.classList.add("info-personaje-personaje");
-  personaje.src = `http://ddragon.leagueoflegends.com/cdn/13.10.1/img/champion/${infoJugador.championName}.png`;
+  personaje.src = `https://ddragon.leagueoflegends.com/cdn/13.10.1/img/champion/${infoJugador.championName}.png`;
   personaje.alt = `Imagenn del personaje ${infoJugador.championName}`;
   personaje.title = `Imagenn del personaje ${infoJugador.championName}`;
   personaje.classList.add("imagen-campeon");
@@ -476,37 +476,37 @@ async function crearRegistro(infoPartida,infoJugador) {
   contenedorObjetos.classList.add("info-personaje-items");
   //crea los elementos que iran dentro de esta columna
   let objeto0 = document.createElement("img");
-  objeto0.src = await verificarImagen(`http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item0}.png`);;
+  objeto0.src = await verificarImagen(`https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item0}.png`);;
   objeto0.alt = "";
   objeto0.title = "";
   objeto0.classList.add("img-info-personaje");
   objeto0.classList.add("item0");
   let objeto1 = document.createElement("img");
-  objeto1.src = await verificarImagen(`http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item1}.png`);
+  objeto1.src = await verificarImagen(`https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item1}.png`);
   objeto1.alt = "";
   objeto1.title = "";
   objeto1.classList.add("item1");
   objeto1.classList.add("img-info-personaje");
   let objeto2 = document.createElement("img");
-  objeto2.src = await verificarImagen(`http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item2}.png`);
+  objeto2.src = await verificarImagen(`https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item2}.png`);
   objeto2.alt = "";
   objeto2.title = "";
   objeto2.classList.add("item2");
   objeto2.classList.add("img-info-personaje");
   let objeto3 = document.createElement("img");
-  objeto3.src = await verificarImagen(`http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item3}.png`);
+  objeto3.src = await verificarImagen(`https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item3}.png`);
   objeto3.alt = "";
   objeto3.title = "";
   objeto3.classList.add("item3");
   objeto3.classList.add("img-info-personaje");
   let objeto4 = document.createElement("img");
-  objeto4.src = await verificarImagen(`http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item4}.png`);
+  objeto4.src = await verificarImagen(`https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item4}.png`);
   objeto4.alt = "";
   objeto4.title = "";
   objeto4.classList.add("item4");
   objeto4.classList.add("img-info-personaje");
   let objeto5 = document.createElement("img");
-  objeto5.src = await verificarImagen(`http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item5}.png`);
+  objeto5.src = await verificarImagen(`https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item5}.png`);
   objeto5.alt = "";
   objeto5.title = "";
   objeto5.classList.add("item5");
@@ -521,7 +521,7 @@ async function crearRegistro(infoPartida,infoJugador) {
 
   
   let ward = document.createElement("img");
-  ward.src = await verificarImagen(`http://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item6}.png`);
+  ward.src = await verificarImagen(`https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item6}.png`);
   ward.alt = "";
   ward.title = "";
   ward.classList.add("img-info-personaje");
