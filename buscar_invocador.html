@@ -61,15 +61,33 @@
 
       <section id="summoner_input_holder">
         <h2>Dime tu nombre, Invocador</h2>
-        <div>
+        <form id="formulario">
           <input type="text" id="summoner_input" tabindex="1" />
+          <select name="" id="">
+            <option value="LA2">LA2 - LAS</option>
+            <option value="LA1">LA1 - LAN</option>
+            <option value="KR">KR - KOREA</option>
+            <option value="NA1">NA1 - NORTE AMERICA</option>
+            <option value="BR1">BR1 - BRASIL</option>
+            <option value="EUN1">EUN1 - EUROPA NORTE</option>
+            <option value="EUW1">EUW1 - EUROPA SUR</option>
+            <option value="JP1">JP - JAPON</option>
+            <option value="PH2">PH - PHILIPINAS</option>
+            <option value="RU">RU - RUSIA</option>
+            <option value="SG2">SG2 SG - MA - IN</option>
+            <option value="OC1">OC1 - OCEANIA</option>
+            <option value="TH2">TH2 - TAILANDIA</option>
+            <option value="TR1">TR1 - TURKIA</option>
+            <option value="TW2">TW2 - TAI - HK - MACAO</option>
+            <option value="VN2">VN2 - VIETNAM</option>
+          </select>
           <input
             type="submit"
             id="search-btn"
             tabindex="2"
             value="Buscar jugador"
           />
-        </div>
+        </form>
       </section>
       <div id="summoner_display_main">
         <div id="summoner_display">
@@ -106,16 +124,6 @@
           </div>
         </div>
         <div id="summoner_display_history">
-          <table>
-            <thead>
-              <th>Campeón</th>
-              <th>K</th>
-              <th>D</th>
-              <th>A</th>
-              <th>Resultado</th>
-            </thead>
-            <tbody></tbody>
-          </table>
         </div>
       </div>
     </main>
