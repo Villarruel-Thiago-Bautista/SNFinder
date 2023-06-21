@@ -1,5 +1,5 @@
 /* INFO DE LA API */
-const API_KEY = "RGAPI-a7295710-6e94-48a8-8845-f706ced0d6dd";
+const API_KEY = "RGAPI-ef019635-402d-4f9b-bb57-1828c0d8c7ff";
 
 /* CONSTANTES VARIAS */
 const searchForm = document.getElementById("search-form");
@@ -15,8 +15,7 @@ searchForm.addEventListener("submit", function (event) {
 
 // FUNCION QUE OBTIENE INFORMACION BASICA DEL JUGADOR (NOMBRE, NIVEL, SUMMONERID)
 function getSummonerInfo() {
-
-  const $region = $form.getElementsByTagName("select")[0];
+  const $region = searchForm.getElementsByTagName("select")[0];
 
   search_btn.disabled = true;
   summonerName.disabled = true;
@@ -78,8 +77,7 @@ function getSummonerIcon(iconUrl) {
 
 //FUNCION QUE RECIBE EL SUMMONER ID OBTENIDO MEDIANTE LA FUNCION getSummonerInfo Y BUSCA LA DIVISIÓN DEL JUGADOR
 function getSummonerRank(data, summonerId) {
-
-  const $region = $form.getElementsByTagName("select")[0];
+  const $region = searchForm.getElementsByTagName("select")[0];
 
   const url = `https://${$region.value}.api.riotgames.com/tft/league/v1/entries/by-summoner/${summonerId}?api_key=${API_KEY}`;
   fetch(url)
@@ -99,12 +97,11 @@ function getSummonerRank(data, summonerId) {
 
 //FUNCION QUE RECIBE EL PUUID OBTENIDO MEDIANTE LA FUNCION getSummonerInfo Y MEDIANTE ESTE OBTIENE LOS MATCHID
 function getSummonerMatchs(puuid) {
-
-  const $region = $form.getElementsByTagName("select")[0];
+  const $region = searchForm.getElementsByTagName("select")[0];
 
   let continente;
 
-  switch($region.value){
+  switch ($region.value) {
     case "LA1":
     case "LA2":
     case "NA1":
@@ -151,12 +148,11 @@ function getSummonerMatchs(puuid) {
 
 //FUNCION QUE RECIBE LOS MATCHID OBTENIDOS MEDIANTE LA FUNCION getSummonerMatchs Y MEDIANTE ESTE OBTIENE LOS DATOS DE LAS PARTIDAS
 function getSummonerMatchsInfo(matchId, puuid) {
-
-  const $region = $form.getElementsByTagName("select")[0];
+  const $region = searchForm.getElementsByTagName("select")[0];
 
   let continente;
 
-  switch($region.value){
+  switch ($region.value) {
     case "LA1":
     case "LA2":
     case "NA1":
@@ -182,7 +178,9 @@ function getSummonerMatchsInfo(matchId, puuid) {
       break;
   }
 
-  fetch(`https://${continente}.api.riotgames.com/tft/match/v1/matches/${matchId}?api_key=${API_KEY}`)
+  fetch(
+    `https://${continente}.api.riotgames.com/tft/match/v1/matches/${matchId}?api_key=${API_KEY}`
+  )
     .then((response) => response.json())
     .then((dataMatch) => {
       for (i = 0; i < 8; i++) {

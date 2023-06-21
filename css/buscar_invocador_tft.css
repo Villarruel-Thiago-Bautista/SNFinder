@@ -202,6 +202,19 @@ button:hover {
     box-shadow: 0 0.25em 0.5em rgba(0, 0, 0, 0.2);
   }
 
+  #select-region {
+    text-align: center;
+    font-size: 1.5em; /* 24px */
+    padding: 0.5em;
+    width: 100%;
+    margin-top: 0.5em;
+    border: none;
+    border-radius: 0.5em;
+    background-color: #f93f55;
+    color: #fff;
+    box-shadow: 0 0.25em 0.5em rgba(0, 0, 0, 0.2);
+  }
+
   #info-summoner {
     display: block;
     max-width: 100%;
@@ -413,6 +426,19 @@ button:hover {
 
   #summoner_input_holder button:hover {
     background-color: #000;
+  }
+
+  #select-region {
+    font-size: 1.9em; /* 32px */
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 0.5em;
+    background-color: #f93f55;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0.25em 0.5em rgba(0, 0, 0, 0.2);
+    margin-left: -0.5em;
+    margin-right: 0.5em;
   }
   /*TABLA*/
 

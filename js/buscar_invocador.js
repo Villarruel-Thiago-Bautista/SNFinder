@@ -6,7 +6,7 @@ const $match_history = document.getElementById("summoner_display_history");
 const $search_btn = document.getElementById("search-btn");
 
 //Clave de la API
-const API_KEY = "RGAPI-1cd95c15-24b5-4cc0-bee0-5692b6238abd";
+const API_KEY = "RGAPI-ef019635-402d-4f9b-bb57-1828c0d8c7ff";
 
 changeDisplay($match_history, "hidden");
 
@@ -15,7 +15,7 @@ changeDisplay($match_history, "hidden");
 //Elemento a escuchar
 const $form = document.getElementById("formulario");
 //Busqueda de invocador con region
-$form.addEventListener("submit", async (e)=>{
+$form.addEventListener("submit", async (e) => {
   e.preventDefault();
   if ($name_input.value != "") {
     rellenarFigureLiga("RANKED_FLEX_SR");
@@ -24,10 +24,10 @@ $form.addEventListener("submit", async (e)=>{
     $search_btn.disabled = true;
 
     let basicData = await basicInfoSummoner();
-    rellenarInfoSummoner(basicData); 
+    rellenarInfoSummoner(basicData);
     rellenarInfoPartidas(basicData);
-}
-})
+  }
+});
 
 //Elemento a escuchar
 const $name_input = document.getElementById("summoner_input");
@@ -42,8 +42,6 @@ if (window.navigator.userAgent.match(/android|iphone|kindle|ipad/i)) {
     }
   });
 }
-
-
 
 //Elemento a escuchar
 const $btn_modal = document.getElementById("btn-modal");
@@ -73,9 +71,7 @@ async function genericRequest(endpoint) {
 
 //retorna informacion auxiliar y nivel de invocador
 async function basicInfoSummoner() {
-
   const $region = $form.getElementsByTagName("select")[0];
-
 
   let res = await genericRequest(
     `https://${$region.value}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${$name_input.value}?api_key=${API_KEY}`
@@ -91,7 +87,6 @@ async function basicInfoSummoner() {
 }
 //retorna el rango del invocador (nada, soloq, flex, soloq y flex)
 async function summonerRank(data) {
-
   const $region = $form.getElementsByTagName("select")[0];
 
   let res = await genericRequest(
@@ -102,7 +97,7 @@ async function summonerRank(data) {
 }
 //retorna lista de ID para usar en la funcion matchInfo
 async function matchIds(puuid) {
-/*
+  /*
   RUSIA NO ANDA TAMPOCO EN OP GG
 
 */
@@ -111,7 +106,7 @@ async function matchIds(puuid) {
   console.log($region.value);
   let continente;
 
-  switch($region.value){
+  switch ($region.value) {
     case "LA1":
     case "LA2":
     case "NA1":
@@ -146,12 +141,11 @@ async function matchIds(puuid) {
 }
 //retorna informacion de partida via id, se usa para mostrar modo de juego y ademas se usa en la funcion player_matchData
 async function matchInfo(match_id) {
-
   const $region = $form.getElementsByTagName("select")[0];
 
   let continente;
 
-  switch($region.value){
+  switch ($region.value) {
     case "LA1":
     case "LA2":
     case "NA1":
@@ -233,14 +227,13 @@ async function rellenarInfoPartidas(basicData) {
 
 //retorna informacion sobre el jugador en cuestion en la partida dada por matchData
 function player_matchData(matchData, pid) {
-  try{
+  try {
     for (let i = 0; i < 10; i++) {
       if (matchData.info.participants[i].puuid == pid) {
         return matchData.info.participants[i];
       }
     }
-  }
-  catch{
+  } catch {
     $search_btn.disabled = false;
     $name_input.disabled = false;
   }
@@ -358,64 +351,61 @@ function calcularWinratio(wins, losses) {
 }
 
 //Crea y retorna un elemento tr con la cantidad de sub-elementos td como informacion se necesite en la tabla
-async function crearRegistro(infoPartida,infoJugador) {
-
+async function crearRegistro(infoPartida, infoJugador) {
   const tablaHechizos = {
-  1: 'Cleanse',
-  3: 'Exhaust',
-  4: 'Flash',
-  6: 'Haste',
-  7: 'Heal',
-  11: 'Smite',
-  12: 'Teleport',
-  13: 'Mana',
-  14: 'Ignite',
-  21: 'Barrier',
-  30: 'To the King!',
-  31: 'Poro Toss',
-  32: 'SnowBall',
-  33: 'Nexus Siege: Siege Weapon Slot',
-  34: 'Nexus Siege: Siege Weapon Slot',
-  35: 'Nexus Siege: Siege Weapon Slot',
-  36: 'Nexus Siege: Siege Weapon Slot',
-  39: 'Ultra (Rapidly Flung) Mark',
-  40: 'Ultra (Rapidly Flung) Mark',
-  41: 'Ultra (Rapidly Flung) Mark',
-  42: 'Ultra (Rapidly Flung) Mark',
-  43: 'Ultra (Rapidly Flung) Mark',
-  44: 'Ultra (Rapidly Flung) Mark',
-  45: 'Ultra (Rapidly Flung) Mark',
-  46: 'Ultra (Rapidly Flung) Mark',
-  47: 'Ultra (Rapidly Flung) Mark',
-  48: 'Ultra (Rapidly Flung) Mark',
-  49: 'Ultra (Rapidly Flung) Mark',
-  50: 'Ultra (Rapidly Flung) Mark',
-  51: 'Ultra (Rapidly Flung) Mark',
-  52: 'Ultra (Rapidly Flung) Mark',
-  53: 'Ultra (Rapidly Flung) Mark',
-  54: 'Ultra (Rapidly Flung) Mark',
-  55: 'Ultra (Rapidly Flung) Mark',
-  56: 'Ultra (Rapidly Flung) Mark',
-  57: 'Ultra (Rapidly Flung) Mark',
-  58: 'Ultra (Rapidly Flung) Mark',
-  59: 'Ultra (Rapidly Flung) Mark',
-  60: 'Ultra (Rapidly Flung) Mark',
-  61: 'Ultra (Rapidly Flung) Mark',
-  62: 'Ultra (Rapidly Flung) Mark',
-  63: 'Ultra (Rapidly Flung) Mark',
-  64: 'Ultra (Rapidly Flung) Mark',
-  65: 'Ultra (Rapidly Flung) Mark',
-  66: 'Ultra (Rapidly Flung) Mark',
-  67: 'Ultra (Rapidly Flung) Mark',
-  68: 'Ultra (Rapidly Flung) Mark',
-  69: 'Ultra (Rapidly Flung) Mark',
-  70: 'Ultra (Rapidly Flung) Mark',
-  71: 'Ultra (Rapidly Flung) Mark',
-  72: 'Ultra (Rapidly Flung) Mark',
-  73: 'Ultra (Rapidly Flung) Mark'
+    1: "Cleanse",
+    3: "Exhaust",
+    4: "Flash",
+    6: "Haste",
+    7: "Heal",
+    11: "Smite",
+    12: "Teleport",
+    13: "Mana",
+    14: "Ignite",
+    21: "Barrier",
+    30: "To the King!",
+    31: "Poro Toss",
+    32: "SnowBall",
+    33: "Nexus Siege: Siege Weapon Slot",
+    34: "Nexus Siege: Siege Weapon Slot",
+    35: "Nexus Siege: Siege Weapon Slot",
+    36: "Nexus Siege: Siege Weapon Slot",
+    39: "Ultra (Rapidly Flung) Mark",
+    40: "Ultra (Rapidly Flung) Mark",
+    41: "Ultra (Rapidly Flung) Mark",
+    42: "Ultra (Rapidly Flung) Mark",
+    43: "Ultra (Rapidly Flung) Mark",
+    44: "Ultra (Rapidly Flung) Mark",
+    45: "Ultra (Rapidly Flung) Mark",
+    46: "Ultra (Rapidly Flung) Mark",
+    47: "Ultra (Rapidly Flung) Mark",
+    48: "Ultra (Rapidly Flung) Mark",
+    49: "Ultra (Rapidly Flung) Mark",
+    50: "Ultra (Rapidly Flung) Mark",
+    51: "Ultra (Rapidly Flung) Mark",
+    52: "Ultra (Rapidly Flung) Mark",
+    53: "Ultra (Rapidly Flung) Mark",
+    54: "Ultra (Rapidly Flung) Mark",
+    55: "Ultra (Rapidly Flung) Mark",
+    56: "Ultra (Rapidly Flung) Mark",
+    57: "Ultra (Rapidly Flung) Mark",
+    58: "Ultra (Rapidly Flung) Mark",
+    59: "Ultra (Rapidly Flung) Mark",
+    60: "Ultra (Rapidly Flung) Mark",
+    61: "Ultra (Rapidly Flung) Mark",
+    62: "Ultra (Rapidly Flung) Mark",
+    63: "Ultra (Rapidly Flung) Mark",
+    64: "Ultra (Rapidly Flung) Mark",
+    65: "Ultra (Rapidly Flung) Mark",
+    66: "Ultra (Rapidly Flung) Mark",
+    67: "Ultra (Rapidly Flung) Mark",
+    68: "Ultra (Rapidly Flung) Mark",
+    69: "Ultra (Rapidly Flung) Mark",
+    70: "Ultra (Rapidly Flung) Mark",
+    71: "Ultra (Rapidly Flung) Mark",
+    72: "Ultra (Rapidly Flung) Mark",
+    73: "Ultra (Rapidly Flung) Mark",
   };
-
-
 
   //crea contenedor del registro
   let frag = document.createElement("div");
@@ -427,7 +417,9 @@ async function crearRegistro(infoPartida,infoJugador) {
   let modoDeJuego = document.createElement("p");
   modoDeJuego.textContent = infoPartida.info.gameMode;
   let duracion = document.createElement("p");
-  duracion.textContent = `Duración: ${Math.trunc((infoPartida.info.gameDuration / 60) * 100) / 100}`;
+  duracion.textContent = `Duración: ${
+    Math.trunc((infoPartida.info.gameDuration / 60) * 100) / 100
+  }`;
   let resultado = document.createElement("p");
   resultado.textContent = infoJugador.win ? "Victoria" : "Derrota";
   //se insertan los elementos en la columna info general
@@ -451,10 +443,9 @@ async function crearRegistro(infoPartida,infoJugador) {
   personaje.classList.add("imagen-campeon");
   let nivel = document.createElement("p");
   nivel.classList.add("nivel-personaje");
-  if(infoJugador.champLevel > 10){
+  if (infoJugador.champLevel > 10) {
     nivel.textContent = ` ${infoJugador.champLevel}`;
-  }
-  else{
+  } else {
     nivel.textContent = infoJugador.champLevel;
   }
   divPersonaje.appendChild(personaje);
@@ -462,13 +453,17 @@ async function crearRegistro(infoPartida,infoJugador) {
   let contenedorHechizos = document.createElement("div");
   contenedorHechizos.classList.add("info-personaje-hechizos");
   let hechizo1 = document.createElement("img");
-  hechizo1.src = `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/spell/Summoner${tablaHechizos[infoJugador.summoner1Id]}.png`;
+  hechizo1.src = `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/spell/Summoner${
+    tablaHechizos[infoJugador.summoner1Id]
+  }.png`;
   hechizo1.title = `Summoner${tablaHechizos[infoJugador.summoner1Id]}`;
   hechizo1.alt = `Summoner${tablaHechizos[infoJugador.summoner1Id]}`;
   let hechizo2 = document.createElement("img");
-  hechizo2.src =  `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/spell/Summoner${tablaHechizos[infoJugador.summoner2Id]}.png`;
+  hechizo2.src = `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/spell/Summoner${
+    tablaHechizos[infoJugador.summoner2Id]
+  }.png`;
   hechizo2.title = `Summoner${tablaHechizos[infoJugador.summoner2Id]}`;
-  hechizo2.alt =`Summoner${tablaHechizos[infoJugador.summoner2Id]}`;
+  hechizo2.alt = `Summoner${tablaHechizos[infoJugador.summoner2Id]}`;
   contenedorHechizos.appendChild(hechizo1);
   contenedorHechizos.appendChild(hechizo2);
   //se crea div para contener los objetos usados por el jugador en esa partida
@@ -476,37 +471,49 @@ async function crearRegistro(infoPartida,infoJugador) {
   contenedorObjetos.classList.add("info-personaje-items");
   //crea los elementos que iran dentro de esta columna
   let objeto0 = document.createElement("img");
-  objeto0.src = await verificarImagen(`https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item0}.png`);;
+  objeto0.src = await verificarImagen(
+    `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item0}.png`
+  );
   objeto0.alt = "";
   objeto0.title = "";
   objeto0.classList.add("img-info-personaje");
   objeto0.classList.add("item0");
   let objeto1 = document.createElement("img");
-  objeto1.src = await verificarImagen(`https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item1}.png`);
+  objeto1.src = await verificarImagen(
+    `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item1}.png`
+  );
   objeto1.alt = "";
   objeto1.title = "";
   objeto1.classList.add("item1");
   objeto1.classList.add("img-info-personaje");
   let objeto2 = document.createElement("img");
-  objeto2.src = await verificarImagen(`https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item2}.png`);
+  objeto2.src = await verificarImagen(
+    `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item2}.png`
+  );
   objeto2.alt = "";
   objeto2.title = "";
   objeto2.classList.add("item2");
   objeto2.classList.add("img-info-personaje");
   let objeto3 = document.createElement("img");
-  objeto3.src = await verificarImagen(`https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item3}.png`);
+  objeto3.src = await verificarImagen(
+    `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item3}.png`
+  );
   objeto3.alt = "";
   objeto3.title = "";
   objeto3.classList.add("item3");
   objeto3.classList.add("img-info-personaje");
   let objeto4 = document.createElement("img");
-  objeto4.src = await verificarImagen(`https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item4}.png`);
+  objeto4.src = await verificarImagen(
+    `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item4}.png`
+  );
   objeto4.alt = "";
   objeto4.title = "";
   objeto4.classList.add("item4");
   objeto4.classList.add("img-info-personaje");
   let objeto5 = document.createElement("img");
-  objeto5.src = await verificarImagen(`https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item5}.png`);
+  objeto5.src = await verificarImagen(
+    `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item5}.png`
+  );
   objeto5.alt = "";
   objeto5.title = "";
   objeto5.classList.add("item5");
@@ -519,9 +526,10 @@ async function crearRegistro(infoPartida,infoJugador) {
   contenedorObjetos.appendChild(objeto4);
   contenedorObjetos.appendChild(objeto5);
 
-  
   let ward = document.createElement("img");
-  ward.src = await verificarImagen(`https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item6}.png`);
+  ward.src = await verificarImagen(
+    `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item6}.png`
+  );
   ward.alt = "";
   ward.title = "";
   ward.classList.add("img-info-personaje");
@@ -544,15 +552,16 @@ async function crearRegistro(infoPartida,infoJugador) {
   let kda = document.createElement("p");
   kda.textContent = `KDA: ${k}/${d}/${a}`;
   let cs = document.createElement("p");
-  let porcentajeParticipacionFarm = porcentajeFarmeo(infoPartida,infoJugador);
-  cs.textContent = ` Cs: ${infoJugador.totalMinionsKilled + infoJugador.neutralMinionsKilled} (${porcentajeParticipacionFarm}%) `;
+  let porcentajeParticipacionFarm = porcentajeFarmeo(infoPartida, infoJugador);
+  cs.textContent = ` Cs: ${
+    infoJugador.totalMinionsKilled + infoJugador.neutralMinionsKilled
+  } (${porcentajeParticipacionFarm}%) `;
   let wardsPuestos = document.createElement("p");
-  let porcentajeParticionWards = porcentajeWardeo(infoPartida,infoJugador);
-  
-  if(porcentajeParticionWards == "0"){
+  let porcentajeParticionWards = porcentajeWardeo(infoPartida, infoJugador);
+
+  if (porcentajeParticionWards == "0") {
     wardsPuestos.textContent = `Wards: ---`;
-  }
-  else{
+  } else {
     wardsPuestos.textContent = `Wards: ${infoJugador.wardsPlaced} (${porcentajeParticionWards}%)`;
   }
 
@@ -561,7 +570,6 @@ async function crearRegistro(infoPartida,infoJugador) {
   infoResultados.appendChild(wardsPuestos);
 
   frag.appendChild(infoResultados);
-  
 
   return frag;
 }
@@ -588,46 +596,49 @@ function mostrarNotFound() {
   $modal.classList.toggle("animado");
 }
 
-
-function porcentajeWardeo(infoPartida,infoJugador){
+function porcentajeWardeo(infoPartida, infoJugador) {
   let total = 0;
-  for(let i = 0; i < 10; i++){
-    if(infoPartida.info.participants[i].win == infoJugador.win){
+  for (let i = 0; i < 10; i++) {
+    if (infoPartida.info.participants[i].win == infoJugador.win) {
       total += infoPartida.info.participants[i].wardsPlaced;
     }
   }
-  let porcentaje = Math.trunc((infoJugador.wardsPlaced * 100 / total) * 100) / 100;
-  
-  if(Number.isNaN(porcentaje) == false){
+  let porcentaje =
+    Math.trunc(((infoJugador.wardsPlaced * 100) / total) * 100) / 100;
+
+  if (Number.isNaN(porcentaje) == false) {
     return porcentaje;
-  }
-  else{
+  } else {
     return "0";
   }
 }
 
-
-function porcentajeFarmeo(infoPartida,infoJugador){
+function porcentajeFarmeo(infoPartida, infoJugador) {
   let total = 0;
-  for(let i = 0; i < 10; i++){
-    if(infoPartida.info.participants[i].win == infoJugador.win){
-      total += infoPartida.info.participants[i].totalMinionsKilled + infoPartida.info.participants[i].neutralMinionsKilled;
+  for (let i = 0; i < 10; i++) {
+    if (infoPartida.info.participants[i].win == infoJugador.win) {
+      total +=
+        infoPartida.info.participants[i].totalMinionsKilled +
+        infoPartida.info.participants[i].neutralMinionsKilled;
     }
   }
-  let porcentaje = Math.trunc((infoJugador.totalMinionsKilled + infoJugador.neutralMinionsKilled * 100 / total) * 100) / 100;
-  
-  if(Number.isNaN(porcentaje) == false){
+  let porcentaje =
+    Math.trunc(
+      (infoJugador.totalMinionsKilled +
+        (infoJugador.neutralMinionsKilled * 100) / total) *
+        100
+    ) / 100;
+
+  if (Number.isNaN(porcentaje) == false) {
     return porcentaje;
-  }
-  else{
+  } else {
     return "0";
   }
-
 }
 
 function verificarImagen(url) {
   return fetch(url)
-    .then(response => {
+    .then((response) => {
       if (response.status === 200) {
         return url; // La imagen está disponible
       } else {
