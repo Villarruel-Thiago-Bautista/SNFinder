@@ -6,7 +6,7 @@ const $match_history = document.getElementById("summoner_display_history");
 const $search_btn = document.getElementById("search-btn");
 
 //Clave de la API
-const API_KEY = "RGAPI-ef019635-402d-4f9b-bb57-1828c0d8c7ff";
+const API_KEY = "RGAPI-d6e964eb-6d64-4a30-bcd9-f1cc7baae62a";
 
 changeDisplay($match_history, "hidden");
 
@@ -361,11 +361,11 @@ async function crearRegistro(infoPartida, infoJugador) {
     11: "Smite",
     12: "Teleport",
     13: "Mana",
-    14: "Ignite",
+    14: "Dot",
     21: "Barrier",
     30: "To the King!",
     31: "Poro Toss",
-    32: "SnowBall",
+    32: "Snowball",
     33: "Nexus Siege: Siege Weapon Slot",
     34: "Nexus Siege: Siege Weapon Slot",
     35: "Nexus Siege: Siege Weapon Slot",
@@ -472,7 +472,7 @@ async function crearRegistro(infoPartida, infoJugador) {
   //crea los elementos que iran dentro de esta columna
   let objeto0 = document.createElement("img");
   objeto0.src = await verificarImagen(
-    `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item0}.png`
+    `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item0}.png`,infoJugador.item0
   );
   objeto0.alt = "";
   objeto0.title = "";
@@ -480,7 +480,7 @@ async function crearRegistro(infoPartida, infoJugador) {
   objeto0.classList.add("item0");
   let objeto1 = document.createElement("img");
   objeto1.src = await verificarImagen(
-    `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item1}.png`
+    `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item1}.png`,infoJugador.item1
   );
   objeto1.alt = "";
   objeto1.title = "";
@@ -488,7 +488,7 @@ async function crearRegistro(infoPartida, infoJugador) {
   objeto1.classList.add("img-info-personaje");
   let objeto2 = document.createElement("img");
   objeto2.src = await verificarImagen(
-    `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item2}.png`
+    `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item2}.png`,infoJugador.item2
   );
   objeto2.alt = "";
   objeto2.title = "";
@@ -496,7 +496,7 @@ async function crearRegistro(infoPartida, infoJugador) {
   objeto2.classList.add("img-info-personaje");
   let objeto3 = document.createElement("img");
   objeto3.src = await verificarImagen(
-    `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item3}.png`
+    `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item3}.png`,infoJugador.item3
   );
   objeto3.alt = "";
   objeto3.title = "";
@@ -504,7 +504,7 @@ async function crearRegistro(infoPartida, infoJugador) {
   objeto3.classList.add("img-info-personaje");
   let objeto4 = document.createElement("img");
   objeto4.src = await verificarImagen(
-    `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item4}.png`
+    `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item4}.png`,infoJugador.item4
   );
   objeto4.alt = "";
   objeto4.title = "";
@@ -512,7 +512,7 @@ async function crearRegistro(infoPartida, infoJugador) {
   objeto4.classList.add("img-info-personaje");
   let objeto5 = document.createElement("img");
   objeto5.src = await verificarImagen(
-    `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item5}.png`
+    `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item5}.png`,infoJugador.item5
   );
   objeto5.alt = "";
   objeto5.title = "";
@@ -528,7 +528,7 @@ async function crearRegistro(infoPartida, infoJugador) {
 
   let ward = document.createElement("img");
   ward.src = await verificarImagen(
-    `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item6}.png`
+    `https://ddragon.leagueoflegends.com/cdn/13.11.1/img/item/${infoJugador.item6}.png`,infoJugador.item6
   );
   ward.alt = "";
   ward.title = "";
@@ -636,7 +636,11 @@ function porcentajeFarmeo(infoPartida, infoJugador) {
   }
 }
 
-function verificarImagen(url) {
+function verificarImagen(url,item) {
+  if(item == "0"){
+    console.log("ITEM VACIO");
+    return "img/noitem.jpg";
+  }
   return fetch(url)
     .then((response) => {
       if (response.status === 200) {
@@ -645,5 +649,5 @@ function verificarImagen(url) {
         return Promise.reject(); // Rechazar la promesa para manejar el caso de error
       }
     })
-    .catch(() => "img/noitem.png"); // Error al acceder a la URL de la imagen
+    .catch(() => "img/noitem.jpg"); // Error al acceder a la URL de la imagen
 }
