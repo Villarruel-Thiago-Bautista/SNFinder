@@ -92,7 +92,7 @@ async function summonerRank(data) {
   let res = await genericRequest(
     `https://${$region.value}.api.riotgames.com/lol/league/v4/entries/by-summoner/${data.id}?api_key=${API_KEY}`
   );
-  console.log(res);
+
   return res;
 }
 //retorna lista de ID para usar en la funcion matchInfo
@@ -103,7 +103,7 @@ async function matchIds(puuid) {
 */
 
   const $region = $form.getElementsByTagName("select")[0];
-  console.log($region.value);
+ 
   let continente;
 
   switch ($region.value) {
@@ -132,11 +132,11 @@ async function matchIds(puuid) {
       continente = "europe";
       break;
   }
-  console.log(continente);
+
   let res = await genericRequest(
     `https://${continente}.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=20&api_key=${API_KEY}`
   );
-  console.log(res);
+
   return res;
 }
 //retorna informacion de partida via id, se usa para mostrar modo de juego y ademas se usa en la funcion player_matchData
@@ -213,7 +213,7 @@ async function rellenarInfoPartidas(basicData) {
         match_data,
         basicData.puuid
       );
-      console.log(match_data, player_match_data);
+
       $match_history.appendChild(
         await crearRegistro(match_data, player_match_data)
       );
@@ -243,7 +243,7 @@ function rellenarFigureLiga(
   queue,
   infoCola = { tier: "", rank: "", losses: "", wins: "" }
 ) {
-  console.log(infoCola);
+
   //Objeto JSON que contiene los diferentes nombres de las imagenes por liga
   const ligas = {
     IRON: {
@@ -638,7 +638,7 @@ function porcentajeFarmeo(infoPartida, infoJugador) {
 
 function verificarImagen(url,item) {
   if(item == "0"){
-    console.log("ITEM VACIO");
+
     return "img/noitem.jpg";
   }
   return fetch(url)

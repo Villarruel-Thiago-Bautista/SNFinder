@@ -198,7 +198,6 @@ function getSummonerMatchsInfo(matchId, puuid) {
 //FUNCION QUE RECIBE LOS DATOS OBTENIDOS MEDIANTE LAS FUNCIONES getSummonerInfo y getSummonerRank Y LOS MUESTRA POR PANTALLA.
 function showSummonerData(data, rank) {
   const infoSummonerDiv = document.getElementById("info-summoner");
-  console.log(rank);
   if(rank == null){
     infoSummonerDiv.innerHTML = `
     <h2>${data.name}</h2>
