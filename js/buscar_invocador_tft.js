@@ -1,5 +1,5 @@
 /* INFO DE LA API */
-const API_KEY = "RGAPI-ef019635-402d-4f9b-bb57-1828c0d8c7ff";
+const API_KEY = "RGAPI-693a9509-dfc9-4b78-87a6-e7be8489e885";
 
 /* CONSTANTES VARIAS */
 const searchForm = document.getElementById("search-form");
@@ -87,7 +87,7 @@ function getSummonerRank(data, summonerId) {
         //VERIFICO SI rankData ES UN ARRAY, SI SU TAMAÑO > 0 Y EL PRIMER VALOR TIENE LA PROPIEDAD .TIER SE LE ASIGNA EL VALOR DEL PRIMER ELEMENTO A LA VARIABLE rank
         Array.isArray(rankData) && rankData.length > 0 && rankData[0].tier
           ? rankData[0]
-          : { tier: "Sin rango", rank: "" };
+          : null;
       showSummonerData(data, rank);
     })
     .catch((error) => {
@@ -198,7 +198,15 @@ function getSummonerMatchsInfo(matchId, puuid) {
 //FUNCION QUE RECIBE LOS DATOS OBTENIDOS MEDIANTE LAS FUNCIONES getSummonerInfo y getSummonerRank Y LOS MUESTRA POR PANTALLA.
 function showSummonerData(data, rank) {
   const infoSummonerDiv = document.getElementById("info-summoner");
-  infoSummonerDiv.innerHTML = `
+  console.log(rank);
+  if(rank == null){
+    infoSummonerDiv.innerHTML = `
+    <h2>${data.name}</h2>
+    <p>Nivel: ${data.summonerLevel}</p>
+    `;
+  }
+  else{
+    infoSummonerDiv.innerHTML = `
     <h2>${data.name}</h2>
     <p>Nivel: ${data.summonerLevel}</p>
     <img src="img/rangos/${rellenarImgRank(rank.tier, rank.rank)}" alt="${
@@ -206,6 +214,8 @@ function showSummonerData(data, rank) {
   } ${rank.rank}" title="${rank.tier} ${rank.rank}" class="img-rank"/>
     <p>${rank.tier} ${rank.rank}</p>
     `;
+  }
+
 }
 
 //FUNCION QUE RECIBE LOS DATOS DE LAS PARTIDAS Y LOS MUESTRA
