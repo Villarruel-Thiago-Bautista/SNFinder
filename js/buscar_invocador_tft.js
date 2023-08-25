@@ -1,5 +1,5 @@
 /* INFO DE LA API */
-const API_KEY = "RGAPI-8d75ccf5-2a7a-419f-9607-9b16fe8056c9";
+const API_KEY = "RGAPI-82ce0d67-e17e-4d94-9452-98a010bce0eb";
 
 /* CONSTANTES VARIAS */
 const searchForm = document.getElementById("search-form");
