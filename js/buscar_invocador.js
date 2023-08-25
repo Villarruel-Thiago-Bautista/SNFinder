@@ -6,7 +6,7 @@ const $match_history = document.getElementById("summoner_display_history");
 const $search_btn = document.getElementById("search-btn");
 
 //Clave de la API
-const API_KEY = "RGAPI-8d75ccf5-2a7a-419f-9607-9b16fe8056c9";
+const API_KEY = "RGAPI-82ce0d67-e17e-4d94-9452-98a010bce0eb";
 
 changeDisplay($match_history, "hidden");
 
