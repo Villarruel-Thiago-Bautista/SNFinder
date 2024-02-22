@@ -13,6 +13,7 @@ searchForm.addEventListener("submit", function (event) {
   getSummonerInfo();
 });
 
+//COMENTARIO SUPER PICOMINAZOOOOOOO
 // FUNCION QUE OBTIENE INFORMACION BASICA DEL JUGADOR (NOMBRE, NIVEL, SUMMONERID)
 function getSummonerInfo() {
   const $region = searchForm.getElementsByTagName("select")[0];
